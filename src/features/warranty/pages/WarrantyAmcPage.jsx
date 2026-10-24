@@ -101,7 +101,7 @@ export function WarrantyAmcPage() {
     },
     {
       id: 'amc-gold',
-      title: 'Vennila Gold Rider Annual Care',
+      title: 'Bike ERP Gold Rider Annual Care',
       tier: 'GOLD',
       pricePaise: 499900, // ₹4,999 / year
       servicesIncluded: '3 Free Comprehensive Services + 1 Teflon Machine Polish + 10% Consumables Discount',
@@ -111,7 +111,7 @@ export function WarrantyAmcPage() {
     },
     {
       id: 'amc-platinum',
-      title: 'Vennila Platinum Elite Care (350cc+ & EV)',
+      title: 'Bike ERP Platinum Elite Care (350cc+ & EV)',
       tier: 'PLATINUM',
       pricePaise: 799900, // ₹7,999 / year
       servicesIncluded: '4 Comprehensive Services + Unlimited Tubeless Punctures + Free Pick & Drop + 15% Accessories Off',

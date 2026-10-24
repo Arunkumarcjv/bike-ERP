@@ -65,7 +65,7 @@ const SAMPLE_DOCS = [
   {
     id: 'doc-005',
     folder: 'COMPLIANCE',
-    entityName: 'Vennila Dealership Karnataka',
+    entityName: 'Bike ERP Dealership Karnataka',
     docType: 'RTO Trade Certificate 2026-27',
     fileName: 'Trade_Certificate_KA_2627.pdf',
     uploadedAt: '2026-04-01',

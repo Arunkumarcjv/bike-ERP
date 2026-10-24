@@ -26,7 +26,7 @@ export default function AiCopilotPage() {
       id: 1,
       role: 'system',
       content:
-        'Vennila Dealership AI Copilot initialized. Connected to live Bangalore Flagship store state (Vehicle Stock, Job Cards, Parts, Accounting Ledger). All responses are strictly grounded in store selectors.',
+        'Bike ERP Dealership AI Copilot initialized. Connected to live Bangalore Flagship store state (Vehicle Stock, Job Cards, Parts, Accounting Ledger). All responses are strictly grounded in store selectors.',
     },
     {
       id: 2,
@@ -111,7 +111,7 @@ export default function AiCopilotPage() {
           <div className="bg-slate-900 text-slate-300 px-4 py-2.5 flex items-center justify-between text-xs font-mono border-b border-slate-800">
             <div className="flex items-center gap-2">
               <Terminal className="w-4 h-4 text-emerald-400" />
-              <span>ai-copilot@vennila-erp:~$ session_active (v2.4)</span>
+              <span>ai-copilot@bike-erp:~$ session_active (v2.4)</span>
             </div>
             <span className="text-[11px] text-slate-400">Model: Gemini 2.5 Flash / Store Engine</span>
           </div>

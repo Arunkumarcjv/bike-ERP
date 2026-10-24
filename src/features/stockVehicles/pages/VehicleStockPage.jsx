@@ -259,7 +259,7 @@ export function VehicleStockPage() {
 
             <div className="p-4 bg-slate-50 rounded-card inline-block border">
               <QRCodeSVG
-                value={`https://vennilabikes.com/vehicle/${selectedUnit.chassisNumber}`}
+                value={`https://bikeerpshowroom.com/vehicle/${selectedUnit.chassisNumber}`}
                 size={160}
                 level="H"
               />

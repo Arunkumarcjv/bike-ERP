@@ -61,7 +61,7 @@ export function AiToolkitPage() {
 
   // E4: Sales call transcript summarizer state
   const [transcript, setTranscript] = useState(
-    "Sales Exec: Hello Priya, Deepak here from Vennila Royal Enfield Bangalore Central. Customer: Hi Deepak, I took a look at the Himalayan 450 yesterday. It's great, but my budget is strictly ₹3.5 Lakhs on-road. Plus my spouse wants delivery on Dhanteras next month. Sales Exec: Absolutely, Priya! With our exchange valuation for your old Activa and HDFC loan, your down payment is just ₹40,000. Let's reserve Kamet White today."
+    "Sales Exec: Hello Priya, Deepak here from Bike ERP Royal Enfield Bangalore Central. Customer: Hi Deepak, I took a look at the Himalayan 450 yesterday. It's great, but my budget is strictly ₹3.5 Lakhs on-road. Plus my spouse wants delivery on Dhanteras next month. Sales Exec: Absolutely, Priya! With our exchange valuation for your old Activa and HDFC loan, your down payment is just ₹40,000. Let's reserve Kamet White today."
   );
   const [summary, setSummary] = useState(null);
 
@@ -428,7 +428,7 @@ export function AiToolkitPage() {
             {/* Visual Poster Card */}
             <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-900 to-indigo-950 text-white text-center space-y-3 shadow-xl">
               <span className="text-[10px] font-bold tracking-widest uppercase opacity-75">
-                Vennila Dealership Special Offer
+                Bike ERP Dealership Special Offer
               </span>
               <h3 className="text-xl font-black">DIWALI DHANTERAS DHAMAKA</h3>
               <p className="text-xs opacity-90">Himalayan 450 &amp; Hunter 350 • Zero Down Payment</p>
@@ -455,7 +455,7 @@ export function AiToolkitPage() {
               <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border text-xs space-y-1">
                 <span className="font-bold text-blue-600">Option A (Festival / Emotional):</span>
                 <p className="text-slate-600 dark:text-slate-300 italic">
-                  "Celebrate Dhanteras with Vennila Bike Showroom! Ride home your Royal Enfield Himalayan with ₹0 down payment &amp; guaranteed festival delivery. Reply 1 to claim your gift voucher."
+                  "Celebrate Dhanteras with Bike ERP Showroom! Ride home your Royal Enfield Himalayan with ₹0 down payment &amp; guaranteed festival delivery. Reply 1 to claim your gift voucher."
                 </p>
               </div>
 
@@ -469,7 +469,7 @@ export function AiToolkitPage() {
               <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl border text-xs space-y-1">
                 <span className="font-bold text-purple-600">Option C (Urgency / Stock Scarcity):</span>
                 <p className="text-slate-600 dark:text-slate-300 italic">
-                  "Only 4 units left of Himalayan Kamet White at pre-revision price! Book before midnight to save ₹8,500 on accessories. Link: vennilabikes.com/book"
+                  "Only 4 units left of Himalayan Kamet White at pre-revision price! Book before midnight to save ₹8,500 on accessories. Link: bikeerpshowroom.com/book"
                 </p>
               </div>
             </div>
@@ -506,7 +506,7 @@ export function AiToolkitPage() {
 
           <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl space-y-3 text-xs leading-relaxed text-slate-700 dark:text-slate-300">
             <p className="font-bold text-slate-900 dark:text-white">
-              Vennila Dealership Group — Executive Digest (Bangalore Central)
+              Bike ERP Dealership Group — Executive Digest (Bangalore Central)
             </p>
             <p>
               • <strong>Revenue &amp; Retails:</strong> 5 new vehicles delivered today (Gross Revenue ₹24.18 Lakhs). Retail run-rate is currently at 93% of the monthly target of 45 units.

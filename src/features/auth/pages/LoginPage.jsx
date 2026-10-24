@@ -64,7 +64,7 @@ export function LoginPage() {
           </div>
         </div>
         <h2 className="mt-4 text-center text-2xl font-bold tracking-tight text-white">
-          Vennila Bike Showroom
+          Bike ERP Showroom
         </h2>
         <p className="mt-1 text-center text-xs text-slate-400">
           Enterprise Dealership Management & Workshop Service Portal

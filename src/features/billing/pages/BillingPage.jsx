@@ -114,7 +114,7 @@ export function BillingPage() {
       paymentMode,
       paymentRef: `${paymentMode}-TXN-${Date.now().toString().slice(-6)}`,
       irn: null,
-      qrCodeString: `upi://pay?pa=vennilabikes@hdfcbank&pn=VennilaBikeShowroom&am=${(
+      qrCodeString: `upi://pay?pa=bikeerpshowroom@hdfcbank&pn=BikeERPShowroom&am=${(
         calculatedTax.grossAmountPaise / 100
       ).toFixed(2)}`,
       branchId: state.activeBranchId,
@@ -495,7 +495,7 @@ export function BillingPage() {
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-slate-50 border rounded inline-block">
                   <QRCodeSVG
-                    value={activeInvoice.qrCodeString || 'upi://pay?pa=vennilabikes@hdfcbank'}
+                    value={activeInvoice.qrCodeString || 'upi://pay?pa=bikeerpshowroom@hdfcbank'}
                     size={80}
                   />
                 </div>

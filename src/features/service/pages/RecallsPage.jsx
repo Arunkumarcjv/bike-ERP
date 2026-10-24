@@ -237,7 +237,7 @@ export function RecallsPage() {
                 Verified OEM WhatsApp Template (Free Replacement)
               </span>
               <p className="text-xs text-emerald-950 dark:text-emerald-200 italic">
-                "Dear Customer, Vennila Bike Showroom in partnership with {selectedBulletin.model} OEM is conducting a complimentary preventive inspection ({selectedBulletin.oemCircularNo}) for your vehicle. Part replacement is 100% Free of Cost (FOC). Reply 1 to schedule priority workshop check-in."
+                "Dear Customer, Bike ERP Showroom in partnership with {selectedBulletin.model} OEM is conducting a complimentary preventive inspection ({selectedBulletin.oemCircularNo}) for your vehicle. Part replacement is 100% Free of Cost (FOC). Reply 1 to schedule priority workshop check-in."
               </p>
             </div>
           </div>

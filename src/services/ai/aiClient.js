@@ -3,7 +3,7 @@ import { checkHandoffNeeded, validateAiResponseGrounding } from './guardrails';
 import { formatMoney } from '../../lib/format';
 
 /**
- * Enterprise AI Client & Predictive Engine for Vennila Bike Showroom
+ * Enterprise AI Client & Predictive Engine for Bike ERP Showroom
  */
 
 export const aiClient = {
@@ -105,7 +105,7 @@ export const aiClient = {
         } else if (language === 'tanglish') {
           reply = `Unga budget-la best options itho sir:\n${listText}\n\nTest ride book panna ungala showroom-ku invite panrom!`;
         } else {
-          reply = `Here are the top models available within your budget at Vennila Bike Showroom:\n${listText}\n\nWould you like a detailed on-road price quotation or a test ride?`;
+          reply = `Here are the top models available within your budget at Bike ERP Showroom:\n${listText}\n\nWould you like a detailed on-road price quotation or a test ride?`;
         }
       }
     }
@@ -167,13 +167,13 @@ export const aiClient = {
     }
     // Default helpful response
     else {
-      sources.push('Vennila Knowledge Base');
+      sources.push('Bike ERP Knowledge Base');
       if (language === 'ta') {
         reply = `வணக்கம்! வெண்ணிலா பைக் ஷோரூம் AI உதவியாளர். நான் பைக் விவரங்கள், சர்வீஸ் ஸ்லாட் முன்பதிவு, மற்றும் ஜாப் கார்டு நிலையை சரிபார்க்க உதவ முடியும். நான் உங்களுக்கு எவ்வாறு உதவலாம்?`;
       } else if (language === 'tanglish') {
-        reply = `Vanakkam! Vennila Bike Showroom AI assistant here. Bike price, service booking, or job card status check panna ungalukku help pannalam. Enna venum sollunga!`;
+        reply = `Vanakkam! Bike ERP Showroom AI assistant here. Bike price, service booking, or job card status check panna ungalukku help pannalam. Enna venum sollunga!`;
       } else {
-        reply = `Hello! I am the Vennila Bike Showroom AI Assistant. I can help you check vehicle prices, book service appointments, track live job cards, or monitor workshop stock. How may I assist you today?`;
+        reply = `Hello! I am the Bike ERP Showroom AI Assistant. I can help you check vehicle prices, book service appointments, track live job cards, or monitor workshop stock. How may I assist you today?`;
       }
     }
 

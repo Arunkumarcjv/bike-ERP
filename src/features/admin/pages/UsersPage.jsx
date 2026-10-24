@@ -24,7 +24,7 @@ export function UsersPage() {
     {
       id: 'usr-001',
       name: 'Rajesh Varma',
-      email: 'rajesh.varma@vennilabikes.com',
+      email: 'rajesh.varma@bikeerpshowroom.com',
       phone: '+91 98450 11001',
       role: 'Super Admin',
       roleKey: 'SUPER_ADMIN',
@@ -39,7 +39,7 @@ export function UsersPage() {
     {
       id: 'usr-002',
       name: 'Anand Kumar',
-      email: 'anand.kumar@vennilabikes.com',
+      email: 'anand.kumar@bikeerpshowroom.com',
       phone: '+91 98450 22002',
       role: 'Sales Manager',
       roleKey: 'SALES_MANAGER',
@@ -54,7 +54,7 @@ export function UsersPage() {
     {
       id: 'usr-003',
       name: 'Pooja Iyer',
-      email: 'pooja.iyer@vennilabikes.com',
+      email: 'pooja.iyer@bikeerpshowroom.com',
       phone: '+91 98450 33003',
       role: 'Accountant',
       roleKey: 'ACCOUNTANT',
@@ -69,7 +69,7 @@ export function UsersPage() {
     {
       id: 'usr-004',
       name: 'Suresh G.',
-      email: 'suresh.g@vennilabikes.com',
+      email: 'suresh.g@bikeerpshowroom.com',
       phone: '+91 98450 44004',
       role: 'Service Manager',
       roleKey: 'SERVICE_MANAGER',
@@ -84,7 +84,7 @@ export function UsersPage() {
     {
       id: 'usr-005',
       name: 'Karthik Raja',
-      email: 'karthik.raja@vennilabikes.com',
+      email: 'karthik.raja@bikeerpshowroom.com',
       phone: '+91 98450 55005',
       role: 'Technician',
       roleKey: 'TECHNICIAN',
@@ -99,7 +99,7 @@ export function UsersPage() {
     {
       id: 'usr-006',
       name: 'Vikram Malhotra',
-      email: 'vikram.m@vennilabikes.com',
+      email: 'vikram.m@bikeerpshowroom.com',
       phone: '+91 98450 66006',
       role: 'Sales Executive',
       roleKey: 'SALES_EXECUTIVE',
@@ -386,7 +386,7 @@ export function UsersPage() {
                   type="email"
                   value={formEmail}
                   onChange={(e) => setFormEmail(e.target.value)}
-                  placeholder="ramesh@vennilabikes.com"
+                  placeholder="ramesh@bikeerpshowroom.com"
                   className="w-full bg-surface border border-border rounded-lg p-2 text-xs text-text-main focus:outline-none focus:ring-1 focus:ring-primary"
                 />
               </div>

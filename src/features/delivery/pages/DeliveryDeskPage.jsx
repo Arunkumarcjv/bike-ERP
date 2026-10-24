@@ -549,7 +549,7 @@ export function DeliveryDeskPage() {
             {/* Printable Area */}
             <div className="p-6 border-2 border-slate-900 dark:border-slate-200 rounded-lg space-y-4 bg-white text-slate-900">
               <div className="text-center pb-3 border-b-2 border-slate-900">
-                <h2 className="text-lg font-black tracking-wider uppercase">Vennila Bike Showroom</h2>
+                <h2 className="text-lg font-black tracking-wider uppercase">Bike ERP Showroom</h2>
                 <p className="text-xs font-semibold">Bangalore Central Flagship • GSTIN: 29AABCB1829M1ZK</p>
                 <div className="inline-block mt-2 px-3 py-1 bg-slate-900 text-white text-xs font-black tracking-widest uppercase">
                   SECURITY GATE PASS (FORM GP-1)

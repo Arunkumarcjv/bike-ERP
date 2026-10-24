@@ -162,7 +162,7 @@ export function TemplatesCustomFieldsPage() {
               {/* Header preview */}
               <div className="flex justify-between items-start pb-4 border-b">
                 <div>
-                  <h2 className="text-lg font-black uppercase">Vennila Bike Showroom</h2>
+                  <h2 className="text-lg font-black uppercase">Bike ERP Showroom</h2>
                   <p className="text-slate-500">Bangalore Central Flagship • 100ft Road, Indiranagar</p>
                   {selectedTemplate.showGstin && (
                     <p className="font-mono text-blue-600 font-bold">GSTIN: 29AABCB1829M1ZK</p>
@@ -170,7 +170,7 @@ export function TemplatesCustomFieldsPage() {
                 </div>
                 {selectedTemplate.showLogo && (
                   <div className="p-2 bg-blue-600 text-white font-black text-sm rounded">
-                    VENNILA
+                    BIKE ERP
                   </div>
                 )}
               </div>

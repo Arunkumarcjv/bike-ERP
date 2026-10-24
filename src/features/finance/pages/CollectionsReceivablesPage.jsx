@@ -105,12 +105,12 @@ export function CollectionsReceivablesPage() {
   const getReminderMessage = (rec, template) => {
     const amt = formatMoney(rec.outstandingPaise);
     if (template === 'POLITE') {
-      return `Dear ${rec.customerName}, gentle reminder that your pending balance of ${amt} on invoice ${rec.invoiceNo} is due. Please pay via UPI QR: https://vennilabikes.com/pay/${rec.invoiceNo}. Thank you! - Vennila Bike Showroom`;
+      return `Dear ${rec.customerName}, gentle reminder that your pending balance of ${amt} on invoice ${rec.invoiceNo} is due. Please pay via UPI QR: https://bikeerpshowroom.com/pay/${rec.invoiceNo}. Thank you! - Bike ERP Showroom`;
     }
     if (template === 'FIRM') {
-      return `Dear ${rec.customerName}, payment of ${amt} for ${rec.invoiceNo} is overdue by ${rec.daysOverdue} days. Kindly settle immediately to avoid late interest charges and credit rating impact. - Vennila Finance Desk`;
+      return `Dear ${rec.customerName}, payment of ${amt} for ${rec.invoiceNo} is overdue by ${rec.daysOverdue} days. Kindly settle immediately to avoid late interest charges and credit rating impact. - Bike ERP Finance Desk`;
     }
-    return `FORMAL NOTICE: Outstanding sum of ${amt} on ${rec.invoiceNo} remains unpaid for ${rec.daysOverdue} days. Failure to remit within 48 hours will compel our legal counsel to initiate Section 138 / recovery proceedings under applicable law. - Vennila Dealership Management`;
+    return `FORMAL NOTICE: Outstanding sum of ${amt} on ${rec.invoiceNo} remains unpaid for ${rec.daysOverdue} days. Failure to remit within 48 hours will compel our legal counsel to initiate Section 138 / recovery proceedings under applicable law. - Bike ERP Dealership Management`;
   };
 
   const handleSendWhatsAppReminder = (rec) => {
@@ -336,7 +336,7 @@ export function CollectionsReceivablesPage() {
 
             <div className="p-4 bg-slate-50 rounded-xl inline-block border">
               <QRCodeSVG 
-                value={`upi://pay?pa=vennilabikes@icici&pn=VennilaShowroom&am=${selectedRecord.outstandingPaise / 100}&cu=INR&tn=Invoice_${selectedRecord.invoiceNo}`}
+                value={`upi://pay?pa=bikeerpshowroom@icici&pn=BikeERPShowroom&am=${selectedRecord.outstandingPaise / 100}&cu=INR&tn=Invoice_${selectedRecord.invoiceNo}`}
                 size={160}
               />
             </div>
@@ -350,7 +350,7 @@ export function CollectionsReceivablesPage() {
             </div>
 
             <p className="text-[11px] text-slate-400">
-              Scan with GPay, PhonePe, Paytm or any BHIM UPI app to settle directly into Vennila Current Account.
+              Scan with GPay, PhonePe, Paytm or any BHIM UPI app to settle directly into Bike ERP Current Account.
             </p>
 
             <button

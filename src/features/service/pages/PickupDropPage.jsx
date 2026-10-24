@@ -152,7 +152,7 @@ export function PickupDropPage() {
           <div className="text-lg font-bold text-emerald-600 mt-1">
             {formatMoney(trips.reduce((sum, t) => sum + t.chargesPaise, 0))}
           </div>
-          <div className="text-[11px] text-slate-400">2 Waived under Vennila Gold AMC</div>
+          <div className="text-[11px] text-slate-400">2 Waived under Bike ERP Gold AMC</div>
         </div>
       </div>
 

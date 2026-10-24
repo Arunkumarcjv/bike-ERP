@@ -155,7 +155,7 @@ export function DviCustomerApprovalPage() {
             <ShieldCheck className="w-3.5 h-3.5" /> Official DVI Inspection
           </div>
           <h1 className="text-xl font-black text-slate-900 dark:text-white">
-            Vennila Bike Showroom &amp; Service Workshop
+            Bike ERP Showroom &amp; Service Workshop
           </h1>
           <p className="text-xs text-slate-500">
             Live Digital Inspection Findings for <strong>KA-01-MJ-4050</strong>
@@ -304,7 +304,7 @@ export function DviCustomerApprovalPage() {
           </div>
 
           <div className="text-[11px] text-slate-500">
-            By signing, you authorize Vennila Bike Showroom to fit approved genuine spare parts at the prices indicated above.
+            By signing, you authorize Bike ERP Showroom to fit approved genuine spare parts at the prices indicated above.
           </div>
 
           <button

@@ -13,7 +13,7 @@ export const ROLE_PRESETS = [
   {
     id: 'super-admin',
     name: 'Rajesh Varma',
-    email: 'rajesh.varma@vennilabikes.com',
+    email: 'rajesh.varma@bikeerpshowroom.com',
     role: ROLES.SUPER_ADMIN,
     avatar: 'RV',
     department: 'Management',
@@ -22,7 +22,7 @@ export const ROLE_PRESETS = [
   {
     id: 'sales-manager',
     name: 'Vikram Sethi',
-    email: 'vikram.sethi@vennilabikes.com',
+    email: 'vikram.sethi@bikeerpshowroom.com',
     role: ROLES.SALES_MANAGER,
     avatar: 'VS',
     department: 'Sales',
@@ -31,7 +31,7 @@ export const ROLE_PRESETS = [
   {
     id: 'sales-exec',
     name: 'Deepak Rao',
-    email: 'deepak.rao@vennilabikes.com',
+    email: 'deepak.rao@bikeerpshowroom.com',
     role: ROLES.SALES_EXECUTIVE,
     avatar: 'DR',
     department: 'Sales',
@@ -40,7 +40,7 @@ export const ROLE_PRESETS = [
   {
     id: 'service-manager',
     name: 'Karthik Raja',
-    email: 'karthik.raja@vennilabikes.com',
+    email: 'karthik.raja@bikeerpshowroom.com',
     role: ROLES.SERVICE_MANAGER,
     avatar: 'KR',
     department: 'Service',
@@ -49,7 +49,7 @@ export const ROLE_PRESETS = [
   {
     id: 'service-advisor',
     name: 'Ananya Sharma',
-    email: 'ananya.sharma@vennilabikes.com',
+    email: 'ananya.sharma@bikeerpshowroom.com',
     role: ROLES.SERVICE_ADVISOR,
     avatar: 'AS',
     department: 'Service',
@@ -58,7 +58,7 @@ export const ROLE_PRESETS = [
   {
     id: 'technician',
     name: 'Manoj Kumar',
-    email: 'manoj.kumar@vennilabikes.com',
+    email: 'manoj.kumar@bikeerpshowroom.com',
     role: ROLES.TECHNICIAN,
     avatar: 'MK',
     department: 'Workshop',
@@ -67,7 +67,7 @@ export const ROLE_PRESETS = [
   {
     id: 'accountant',
     name: 'Suresh Iyer',
-    email: 'suresh.iyer@vennilabikes.com',
+    email: 'suresh.iyer@bikeerpshowroom.com',
     role: ROLES.ACCOUNTANT,
     avatar: 'SI',
     department: 'Accounts',
@@ -76,7 +76,7 @@ export const ROLE_PRESETS = [
   {
     id: 'inventory-manager',
     name: 'Girish Patil',
-    email: 'girish.patil@vennilabikes.com',
+    email: 'girish.patil@bikeerpshowroom.com',
     role: ROLES.INVENTORY_MANAGER,
     avatar: 'GP',
     department: 'Parts & Spares',

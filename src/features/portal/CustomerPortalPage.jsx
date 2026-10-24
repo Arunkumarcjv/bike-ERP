@@ -114,7 +114,7 @@ export default function CustomerPortalPage() {
               VB
             </div>
             <div>
-              <h2 className="font-bold text-slate-900 text-lg">Vennila Bike Customer Portal</h2>
+              <h2 className="font-bold text-slate-900 text-lg">Bike ERP Bike Customer Portal</h2>
               <p className="text-xs text-slate-500">Service, RC Vault &amp; Live Tracking</p>
             </div>
           </div>
@@ -180,7 +180,7 @@ export default function CustomerPortalPage() {
             </div>
             <div>
               <h1 className="font-bold text-slate-900 dark:text-white text-sm sm:text-base leading-tight">
-                Vennila Showroom Customer Lounge
+                Bike ERP Showroom Customer Lounge
               </h1>
               <p className="text-xs text-slate-500 flex items-center gap-1">
                 <span>Welcome, {customer.name}</span>
@@ -408,7 +408,7 @@ export default function CustomerPortalPage() {
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-white rounded-lg shadow-sm">
                     <QRCodeSVG
-                      value={`upi://pay?pa=vennilabikes@icici&pn=VennilaShowroom&am=${activeJob.estimatedAmountPaise / 100}&cu=INR`}
+                      value={`upi://pay?pa=bikeerpshowroom@icici&pn=BikeERPShowroom&am=${activeJob.estimatedAmountPaise / 100}&cu=INR`}
                       size={64}
                     />
                   </div>
@@ -473,7 +473,7 @@ export default function CustomerPortalPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1.5">
                     {[
                       { name: 'General Maintenance Service', price: '₹ 2,450', desc: 'Engine oil, filter replacement, 24-point safety check' },
-                      { name: 'Free AMC Scheduled Check', price: '₹ 0.00', desc: 'Covered under your active Vennila AMC plan' },
+                      { name: 'Free AMC Scheduled Check', price: '₹ 0.00', desc: 'Covered under your active Bike ERP AMC plan' },
                       { name: 'Water Wash & Chain Detailing', price: '₹ 450', desc: 'Foam wash, chain lubrication, polish' },
                       { name: 'Express Brake & Electrical Diagnostic', price: '₹ 850', desc: 'Brake pads check, battery load test' },
                     ].map((pkg) => (

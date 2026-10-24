@@ -320,7 +320,7 @@ export function AccessoriesCounterPage() {
           <div className="bg-white rounded-xl max-w-sm w-full p-6 shadow-2xl text-slate-900 font-mono text-xs space-y-3">
             <div className="flex justify-between items-start pb-2 border-b border-dashed border-slate-400">
               <div>
-                <h3 className="font-bold text-sm uppercase">Vennila Bike Counter</h3>
+                <h3 className="font-bold text-sm uppercase">Bike ERP Bike Counter</h3>
                 <p className="text-[10px]">Bangalore Central • GST: 29AABCB1829M1ZK</p>
               </div>
               <button onClick={() => setShowReceipt(false)} className="text-slate-400 hover:text-slate-800">

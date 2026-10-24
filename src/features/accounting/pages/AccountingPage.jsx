@@ -290,7 +290,7 @@ export function AccountingPage() {
       {activeTab === 'PL' && (
         <Card className="p-6 space-y-4 max-w-3xl mx-auto">
           <div className="text-center border-b pb-3">
-            <h2 className="text-lg font-bold text-text-main">Vennila Bike Showroom</h2>
+            <h2 className="text-lg font-bold text-text-main">Bike ERP Showroom</h2>
             <p className="text-xs text-text-muted">Trading, Profit & Loss Statement (Year-to-Date FY 26-27)</p>
           </div>
 

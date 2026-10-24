@@ -279,7 +279,7 @@ export const AI_TOOLS = [
       return {
         success: true,
         appointmentId: apptId,
-        confirmationText: `Confirmed! Booking #${apptId} scheduled for ${args.customerName} on ${args.date} at ${args.slotTime} at Vennila Bike Showroom (Bangalore Central Flagship).`,
+        confirmationText: `Confirmed! Booking #${apptId} scheduled for ${args.customerName} on ${args.date} at ${args.slotTime} at Bike ERP Showroom (Bangalore Central Flagship).`,
       };
     },
   },

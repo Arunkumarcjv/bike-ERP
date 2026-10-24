@@ -1,7 +1,7 @@
 import { aiClient } from '../ai/aiClient';
 
 /**
- * 20 Scripted Multi-turn Eval Scenarios for Vennila Bike Showroom WhatsApp AI Assistant
+ * 20 Scripted Multi-turn Eval Scenarios for Bike ERP Showroom WhatsApp AI Assistant
  */
 export const EVAL_SCENARIOS = [
   {

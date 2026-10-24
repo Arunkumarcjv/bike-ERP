@@ -1,10 +1,10 @@
 export const DEALERSHIP_INFO = {
-  name: 'Vennila Bike Showroom',
+  name: 'Bike ERP Showroom',
   tagline: 'Authorized Two-Wheeler Sales, Service & Spares',
   headOffice: '142, Hosur Main Road, Koramangala, Bangalore - 560095',
   phone: '+91 80 4965 2000',
-  email: 'contact@vennilabikes.com',
-  website: 'https://vennilabikes.com',
+  email: 'contact@bikeerpshowroom.com',
+  website: 'https://bikeerpshowroom.com',
   gstin: '29AABCB1829M1ZK',
   state: 'Karnataka',
   stateCode: '29',

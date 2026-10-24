@@ -77,7 +77,7 @@ export function LoyaltyReferralsPage() {
   const [search, setSearch] = useState('');
 
   const handleCopyReferral = (code) => {
-    navigator.clipboard?.writeText(`https://vennilabikes.com/refer/${code}`);
+    navigator.clipboard?.writeText(`https://bikeerpshowroom.com/refer/${code}`);
     toast.success(`Referral link for code "${code}" copied to clipboard!`);
   };
 
@@ -154,7 +154,7 @@ export function LoyaltyReferralsPage() {
             <div className="flex justify-between items-start">
               <div>
                 <span className="text-[10px] font-bold tracking-widest uppercase opacity-80">
-                  Vennila Privilege Club
+                  Bike ERP Privilege Club
                 </span>
                 <h3 className="text-lg font-black mt-0.5">{selectedMember.customerName}</h3>
                 <span className="text-xs font-mono opacity-90">{selectedMember.cardNo}</span>
@@ -175,7 +175,7 @@ export function LoyaltyReferralsPage() {
 
               <div className="p-1.5 bg-white rounded-lg shadow-md">
                 <QRCodeSVG 
-                  value={`VENNILA|MEMBER:${selectedMember.cardNo}|PTS:${selectedMember.pointsBalance}`} 
+                  value={`BIKE ERP|MEMBER:${selectedMember.cardNo}|PTS:${selectedMember.pointsBalance}`} 
                   size={64} 
                 />
               </div>

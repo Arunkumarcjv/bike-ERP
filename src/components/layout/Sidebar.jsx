@@ -108,7 +108,7 @@ export function Sidebar() {
           {!sidebarCollapsed && (
             <div className="flex flex-col truncate">
               <span className="font-bold text-sm tracking-tight text-white truncate">
-                {dealership?.name || 'Vennila Bikes'}
+                {dealership?.name || 'Bike ERP Showroom'}
               </span>
               <span className="text-[10px] text-blue-200/70 uppercase tracking-wider font-semibold">
                 ERP & Service Hub

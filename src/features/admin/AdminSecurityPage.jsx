@@ -277,7 +277,7 @@ export default function AdminSecurityPage() {
               <label className="text-xs font-semibold text-slate-500">Legal Entity Name</label>
               <input
                 type="text"
-                defaultValue="Vennila Motors Private Limited"
+                defaultValue="Bike ERP Showroom Private Limited"
                 className="w-full mt-1 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 rounded-lg p-2 text-xs text-slate-900 dark:text-white font-medium"
               />
             </div>
@@ -286,7 +286,7 @@ export default function AdminSecurityPage() {
               <label className="text-xs font-semibold text-slate-500">Trade Name</label>
               <input
                 type="text"
-                defaultValue="Vennila Bike Showroom"
+                defaultValue="Bike ERP Showroom"
                 className="w-full mt-1 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 rounded-lg p-2 text-xs text-slate-900 dark:text-white font-medium"
               />
             </div>

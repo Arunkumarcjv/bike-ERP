@@ -109,7 +109,7 @@ export function DigitalShowroomPage() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-black text-slate-900 dark:text-white">
-              Vennila Digital Showroom Kiosk
+              Bike ERP Digital Showroom Kiosk
             </h1>
             {isCustomerMode ? (
               <span className="px-3 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 flex items-center gap-1">

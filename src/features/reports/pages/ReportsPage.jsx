@@ -37,8 +37,8 @@ export function ReportsPage() {
   ];
 
   const handleExportXlsx = () => {
-    exportToExcel(leaderboard, 'ExecutiveLeaderboard', 'Vennila_Sales_Report_FY2627.xlsx');
-    toast.success('Downloaded Executive Excel BI report (Vennila_Sales_Report_FY2627.xlsx)');
+    exportToExcel(leaderboard, 'ExecutiveLeaderboard', 'Bike ERP_Sales_Report_FY2627.xlsx');
+    toast.success('Downloaded Executive Excel BI report (Bike ERP_Sales_Report_FY2627.xlsx)');
   };
 
   return (

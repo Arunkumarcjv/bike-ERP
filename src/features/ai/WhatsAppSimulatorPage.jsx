@@ -27,7 +27,7 @@ export default function WhatsAppSimulatorPage() {
     {
       id: 1,
       role: 'assistant',
-      content: 'Hello! I am your Vennila Bike Showroom virtual assistant. How can I assist you with bikes or service today?',
+      content: 'Hello! I am your Bike ERP Showroom virtual assistant. How can I assist you with bikes or service today?',
       time: '10:00 AM',
     },
   ]);
@@ -120,8 +120,8 @@ export default function WhatsAppSimulatorPage() {
           activeLang === 'ta'
             ? 'வணக்கம்! வெண்ணிலா பைக் ஷோரூம் AI உதவியாளர். நான் உங்களுக்கு எவ்வாறு உதவலாம்?'
             : activeLang === 'tanglish'
-            ? 'Vanakkam! Vennila Bike Showroom AI assistant here. Eppadi help pannalam?'
-            : 'Hello! I am your Vennila Bike Showroom virtual assistant. How can I assist you with bikes or service today?',
+            ? 'Vanakkam! Bike ERP Showroom AI assistant here. Eppadi help pannalam?'
+            : 'Hello! I am your Bike ERP Showroom virtual assistant. How can I assist you with bikes or service today?',
         time: '10:00 AM',
       },
     ]);
@@ -176,7 +176,7 @@ export default function WhatsAppSimulatorPage() {
                   VB
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm leading-tight">Vennila Bike Assistant</h3>
+                  <h3 className="font-semibold text-sm leading-tight">Bike ERP Bike Assistant</h3>
                   <p className="text-[11px] text-emerald-100 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse" />
                     Verified Showroom Bot

@@ -16,7 +16,7 @@ export const SEEDED_WHATSAPP_CONVERSATIONS = [
         id: 'msg-1',
         sender: 'BOT',
         direction: 'OUTBOUND',
-        text: 'Vanakkam Rohan sir! Your Hunter 350 (KA-03-JM-4921) has entered Bay #01 for periodic maintenance. Estimated delivery today 5:30 PM. Track live: https://vennilabikes.com/portal/job/jc-2627-001',
+        text: 'Vanakkam Rohan sir! Your Hunter 350 (KA-03-JM-4921) has entered Bay #01 for periodic maintenance. Estimated delivery today 5:30 PM. Track live: https://bikeerpshowroom.com/portal/job/jc-2627-001',
         timestamp: relativeDateIso(0, 11, 28),
         status: 'READ',
       },
@@ -69,8 +69,8 @@ export const SEEDED_WA_TEMPLATES = [
     category: 'UTILITY',
     language: 'en',
     status: 'APPROVED', // APPROVED, PENDING, REJECTED
-    body: 'Dear {{1}}, your {{2}} ({{3}}) is due for periodic service at Vennila Bike Showroom. Book now to keep your warranty active and enjoy smooth rides: {{4}}',
-    exampleParams: ['Rohan', 'Hunter 350', 'KA-03-JM-4921', 'https://vennilabikes.com/book'],
+    body: 'Dear {{1}}, your {{2}} ({{3}}) is due for periodic service at Bike ERP Showroom. Book now to keep your warranty active and enjoy smooth rides: {{4}}',
+    exampleParams: ['Rohan', 'Hunter 350', 'KA-03-JM-4921', 'https://bikeerpshowroom.com/book'],
   },
   {
     id: 'tpl-service-due-ta',
@@ -80,7 +80,7 @@ export const SEEDED_WA_TEMPLATES = [
     language: 'ta',
     status: 'APPROVED',
     body: 'வணக்கம் {{1}}, உங்கள் {{2}} ({{3}}) வாகனத்திற்கான சர்வீஸ் நேரம் வந்துவிட்டது. வெண்ணிலா பைக் ஷோரூமில் உடனே புக் செய்யுங்கள்: {{4}}',
-    exampleParams: ['ரோகன்', 'ஹண்டர் 350', 'KA-03-JM-4921', 'https://vennilabikes.com/book'],
+    exampleParams: ['ரோகன்', 'ஹண்டர் 350', 'KA-03-JM-4921', 'https://bikeerpshowroom.com/book'],
   },
   {
     id: 'tpl-delivery-ready',
@@ -99,7 +99,7 @@ export const SEEDED_WA_TEMPLATES = [
     category: 'MARKETING',
     language: 'en',
     status: 'APPROVED',
-    body: 'Celebrate this Festive Season with Vennila Bike Showroom! Get zero down payment, ₹5,000 exchange bonus, and free helmet + 5-yr AMC on all Royal Enfield & Honda bikes. Offer valid till Sunday: {{1}}',
-    exampleParams: ['https://vennilabikes.com/offers'],
+    body: 'Celebrate this Festive Season with Bike ERP Showroom! Get zero down payment, ₹5,000 exchange bonus, and free helmet + 5-yr AMC on all Royal Enfield & Honda bikes. Offer valid till Sunday: {{1}}',
+    exampleParams: ['https://bikeerpshowroom.com/offers'],
   },
 ];
