@@ -1,0 +1,76 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  darkMode: ['class', '[data-theme="dark"]'],
+  content: [
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: 'var(--bg-main)',
+        surface: 'var(--bg-surface)',
+        'surface-subtle': 'var(--bg-surface-subtle)',
+        'surface-muted': 'var(--bg-surface-muted)',
+        sidebar: 'var(--bg-sidebar)',
+        'sidebar-hover': 'var(--bg-sidebar-hover)',
+        'sidebar-active': 'var(--bg-sidebar-active)',
+        border: 'var(--border-color)',
+        'border-subtle': 'var(--border-subtle)',
+        primary: {
+          DEFAULT: 'var(--primary)',
+          hover: 'var(--primary-hover)',
+          active: 'var(--primary-active)',
+          light: 'var(--primary-light)',
+          foreground: 'var(--primary-foreground)',
+        },
+        navy: {
+          950: '#07132e',
+          900: '#0B1F4B',
+          800: '#132c66',
+          700: '#1e3d85',
+        },
+        text: {
+          main: 'var(--text-main)',
+          muted: 'var(--text-muted)',
+          subtle: 'var(--text-subtle)',
+          inverse: 'var(--text-inverse)',
+        },
+        status: {
+          green: 'var(--status-green)',
+          'green-bg': 'var(--status-green-bg)',
+          'green-border': 'var(--status-green-border)',
+          amber: 'var(--status-amber)',
+          'amber-bg': 'var(--status-amber-bg)',
+          'amber-border': 'var(--status-amber-border)',
+          blue: 'var(--status-blue)',
+          'blue-bg': 'var(--status-blue-bg)',
+          'blue-border': 'var(--status-blue-border)',
+          red: 'var(--status-red)',
+          'red-bg': 'var(--status-red-bg)',
+          'red-border': 'var(--status-red-border)',
+          grey: 'var(--status-grey)',
+          'grey-bg': 'var(--status-grey-bg)',
+          'grey-border': 'var(--status-grey-border)',
+        },
+      },
+      borderRadius: {
+        card: 'var(--radius-card)',
+        button: 'var(--radius-button)',
+        badge: 'var(--radius-badge)',
+        input: 'var(--radius-input)',
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+      },
+      boxShadow: {
+        soft: '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)',
+        card: '0 1px 3px 0 rgba(11, 31, 75, 0.04), 0 1px 2px -1px rgba(11, 31, 75, 0.03)',
+        dropdown: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
+        dialog: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+      },
+    },
+  },
+  plugins: [],
+};

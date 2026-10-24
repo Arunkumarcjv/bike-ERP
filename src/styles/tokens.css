@@ -1,0 +1,97 @@
+:root {
+  /* Color Palette - Light Theme */
+  --bg-main: #F3F7FD;
+  --bg-surface: #FFFFFF;
+  --bg-surface-subtle: #F8FAFC;
+  --bg-surface-muted: #EDF2F9;
+  
+  --bg-sidebar: #0B1F4B;
+  --bg-sidebar-hover: #132c66;
+  --bg-sidebar-active: #2563EB;
+  
+  --border-color: #E2E8F0;
+  --border-subtle: #F1F5F9;
+  
+  --primary: #2563EB;
+  --primary-hover: #1D4ED8;
+  --primary-active: #1E40AF;
+  --primary-light: #EFF6FF;
+  --primary-foreground: #FFFFFF;
+  
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --text-subtle: #94A3B8;
+  --text-inverse: #FFFFFF;
+  
+  /* Semantic Status Colors */
+  --status-green: #16A34A;
+  --status-green-bg: #DCFCE7;
+  --status-green-border: #BBF7D0;
+  
+  --status-amber: #D97706;
+  --status-amber-bg: #FEF3C7;
+  --status-amber-border: #FDE68A;
+  
+  --status-blue: #2563EB;
+  --status-blue-bg: #DBEAFE;
+  --status-blue-border: #BFDBFE;
+  
+  --status-red: #DC2626;
+  --status-red-bg: #FEE2E2;
+  --status-red-border: #FECACA;
+  
+  --status-grey: #64748B;
+  --status-grey-bg: #F1F5F9;
+  --status-grey-border: #E2E8F0;
+  
+  /* Geometry */
+  --radius-card: 12px;
+  --radius-button: 8px;
+  --radius-badge: 9999px;
+  --radius-input: 8px;
+}
+
+[data-theme="dark"] {
+  --bg-main: #0B132B;
+  --bg-surface: #111C44;
+  --bg-surface-subtle: #162252;
+  --bg-surface-muted: #1E293B;
+  
+  --bg-sidebar: #07132E;
+  --bg-sidebar-hover: #0E1E45;
+  --bg-sidebar-active: #2563EB;
+  
+  --border-color: #1E293B;
+  --border-subtle: #27354A;
+  
+  --primary: #3B82F6;
+  --primary-hover: #2563EB;
+  --primary-active: #1D4ED8;
+  --primary-light: #1E293B;
+  --primary-foreground: #FFFFFF;
+  
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --text-subtle: #64748B;
+  --text-inverse: #0F172A;
+  
+  --status-green: #22C55E;
+  --status-green-bg: #052E16;
+  --status-green-border: #14532D;
+  
+  --status-amber: #F59E0B;
+  --status-amber-bg: #451A03;
+  --status-amber-border: #78350F;
+  
+  --status-blue: #3B82F6;
+  --status-blue-bg: #172554;
+  --status-blue-border: #1E3A8A;
+  
+  --status-red: #EF4444;
+  --status-red-bg: #450A0A;
+  --status-red-border: #7F1D1D;
+  
+  --status-grey: #94A3B8;
+  --status-grey-bg: #1E293B;
+  --status-grey-border: #334155;
+}

@@ -1,0 +1,41 @@
+@media print {
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    font-size: 11pt;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Hide app chrome during printing */
+  header, nav, aside, .no-print, button, .app-sidebar, .app-topbar, .action-toolbar {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .printable-area {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 10mm !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* 80mm Thermal Receipt Print Rules */
+  .thermal-receipt {
+    width: 72mm !important;
+    max-width: 72mm !important;
+    padding: 2mm !important;
+    font-family: monospace !important;
+    font-size: 9pt !important;
+    line-height: 1.2 !important;
+  }
+
+  @page {
+    size: auto;
+    margin: 8mm;
+  }
+}
