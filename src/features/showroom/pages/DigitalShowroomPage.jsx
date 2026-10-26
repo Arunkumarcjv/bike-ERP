@@ -103,9 +103,9 @@ export function DigitalShowroomPage() {
   };
 
   return (
-    <div className={`p-6 max-w-7xl mx-auto space-y-6 ${isCustomerMode ? 'bg-slate-50 dark:bg-slate-900 rounded-3xl p-8 border-4 border-blue-500/20' : ''}`}>
+    <div className={`p-4 sm:p-5 max-w-7xl mx-auto space-y-4 ${isCustomerMode ? 'bg-slate-50 dark:bg-slate-900 rounded-3xl p-6 border-4 border-blue-500/20' : ''}`}>
       {/* Top Bar: Kiosk Header & Customer Mode Toggle */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-black text-slate-900 dark:text-white">
@@ -224,9 +224,9 @@ export function DigitalShowroomPage() {
         /* Configurator: Bike Selector + Live SVG Color Tinting + Price Breakdown + EMI */
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
           {/* Left 2 Cols: Bike Canvas + Color Chips + Accessories */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-3">
             {/* Bike Select Strip */}
-            <div className="flex gap-2 overflow-x-auto pb-2">
+            <div className="flex gap-2 overflow-x-auto pb-1">
               {BIKE_CATALOG.map(b => (
                 <button
                   key={b.id}
@@ -234,7 +234,7 @@ export function DigitalShowroomPage() {
                     setSelectedBike(b);
                     setSelectedColor(b.colors[0]);
                   }}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition border ${
+                  className={`px-4 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition border ${
                     selectedBike.id === b.id
                       ? 'bg-blue-600 text-white border-blue-600 shadow-md'
                       : 'bg-white dark:bg-slate-850 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-50'
@@ -246,50 +246,45 @@ export function DigitalShowroomPage() {
             </div>
 
             {/* Visual Canvas Display */}
-            <div className="bg-white dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-8 text-center space-y-6">
-              <div className="space-y-1">
-                <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
-                  {selectedBike.brand}
-                </span>
-                <h2 className="text-2xl font-black text-slate-900 dark:text-white">
-                  {selectedBike.model}
-                </h2>
-                <p className="text-xs text-slate-500 italic">"{selectedBike.tagline}"</p>
-              </div>
-
-              {/* High-Fidelity SVG with selected Color Tint */}
-              <div className="py-6 flex items-center justify-center">
-                <BikeThumb
-                  bodyType={selectedBike.bodyType}
-                  color={selectedColor?.hex || '#2563EB'}
-                  className="w-80 h-48 drop-shadow-xl transition-all duration-300"
-                />
-              </div>
-
-              {/* Color Palette Chips */}
-              <div className="space-y-2 pt-2">
-                <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
-                  Select Official Paint Scheme: <strong>{selectedColor?.name}</strong>
-                </span>
-                <div className="flex items-center justify-center gap-3">
-                  {selectedBike.colors.map(col => (
-                    <button
-                      key={col.code}
-                      onClick={() => setSelectedColor(col)}
-                      className={`w-9 h-9 rounded-full border-2 transition transform hover:scale-110 flex items-center justify-center ${
-                        selectedColor.code === col.code
-                          ? 'border-blue-600 ring-2 ring-blue-400 ring-offset-2'
-                          : 'border-slate-300 dark:border-slate-700'
-                      }`}
-                      style={{ backgroundColor: col.hex }}
-                      title={col.name}
-                    >
-                      {selectedColor.code === col.code && (
-                        <Check className={`w-4 h-4 ${col.hex === '#E2E8F0' ? 'text-slate-900' : 'text-white'}`} />
-                      )}
-                    </button>
-                  ))}
+            <div className="bg-white dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+              <div className="px-5 py-2.5 flex items-center justify-between bg-slate-50/70 dark:bg-slate-800/40 border-b border-slate-100 dark:border-slate-800">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-[11px] font-black uppercase tracking-wider text-blue-600">
+                    {selectedBike.brand}
+                  </span>
+                  <span className="text-slate-300 dark:text-slate-700 font-bold">•</span>
+                  <h2 className="text-base font-black text-slate-900 dark:text-white">
+                    {selectedBike.model}
+                  </h2>
                 </div>
+                <p className="text-xs text-slate-400 italic">"{selectedBike.tagline}"</p>
+              </div>
+
+              {/* Showcase Frame - Full Width Tab Fit */}
+              <div className="w-full">
+                {selectedBike.videoUrl ? (
+                  <div className="relative w-full aspect-video bg-black overflow-hidden">
+                    <video
+                      key={selectedBike.videoUrl}
+                      src={selectedBike.videoUrl}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      disablePictureInPicture
+                      onContextMenu={(e) => e.preventDefault()}
+                      className="w-full h-full object-cover pointer-events-none select-none"
+                    />
+                  </div>
+                ) : (
+                  <div className="py-8 flex items-center justify-center">
+                    <BikeThumb
+                      bodyType={selectedBike.bodyType}
+                      color={selectedColor?.hex || '#2563EB'}
+                      className="w-80 h-48 drop-shadow-xl transition-all duration-300"
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
