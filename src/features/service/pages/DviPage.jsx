@@ -11,11 +11,27 @@ import {
   Eye, 
   Plus, 
   Trash2,
-  DollarSign
+  DollarSign,
+  Maximize2,
+  ZoomIn,
+  X
 } from 'lucide-react';
 import { useAppStore } from '../../../store';
 import { formatMoney } from '../../../lib/format';
 import { toast } from 'sonner';
+
+const DENT_MAP_PINS = [
+  { pin: 1, label: 'Headlight – Scratch', color: 'bg-red-500', view: 'Front View' },
+  { pin: 2, label: 'Fairing – Dent', color: 'bg-blue-500', view: 'Front / Side' },
+  { pin: 4, label: 'Fender – Dent', color: 'bg-amber-500', view: 'Front View' },
+  { pin: 6, label: 'Seat – Tear', color: 'bg-orange-500', view: 'Left Side' },
+  { pin: 10, label: 'Tail Light – Scratch', color: 'bg-blue-600', view: 'Rear View' },
+  { pin: 12, label: 'Indicator – Scratch', color: 'bg-emerald-600', view: 'Rear View' },
+  { pin: 15, label: 'Fuel Tank – Dent', color: 'bg-amber-600', view: 'Right Side' },
+  { pin: 18, label: 'Exhaust Cover – Scratch', color: 'bg-emerald-500', view: 'Right Side' },
+  { pin: 20, label: 'Seat – Tear', color: 'bg-purple-600', view: 'Top View' },
+  { pin: 21, label: 'Grab Rail – Dent', color: 'bg-cyan-600', view: 'Top View' },
+];
 
 const SAMPLE_INSPECTION_ITEMS = [
   {
@@ -75,6 +91,7 @@ export function DviPage() {
   const [selectedJcId, setSelectedJcId] = useState(jobCards[0]?.id || 'jc-2627-001');
   const [items, setItems] = useState(SAMPLE_INSPECTION_ITEMS);
   const [selectedPin, setSelectedPin] = useState(null);
+  const [showFullMapModal, setShowFullMapModal] = useState(false);
 
   const selectedJobCard = jobCards.find(jc => jc.id === selectedJcId) || jobCards[0];
 
@@ -150,54 +167,70 @@ export function DviPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
         {/* Bike Silhouette & Exterior Damage Map */}
         <div className="bg-white dark:bg-slate-850 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-          <h2 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <Camera className="w-4 h-4 text-blue-600" />
-            Exterior Body &amp; Dent Pin-Map
-          </h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <Camera className="w-4 h-4 text-blue-600" />
+              Exterior Body &amp; Dent Pin-Map
+            </h2>
+            <button
+              onClick={() => setShowFullMapModal(true)}
+              className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 hover:underline"
+              title="Expand full-size 360 inspection image"
+            >
+              <Maximize2 className="w-3.5 h-3.5" />
+              <span>Full View</span>
+            </button>
+          </div>
+
           <p className="text-xs text-slate-500">
-            Click on bike schematic to mark pre-existing scratches, dents, or broken indicators.
+            360° photographic walkaround schematic with pre-existing scratches, dents &amp; defects tagged across all 5 vehicle angles.
           </p>
 
-          {/* Bike Silhouette Schematic */}
-          <div className="relative border border-slate-200 dark:border-slate-700 rounded-lg p-6 bg-slate-50 dark:bg-slate-900 flex items-center justify-center min-h-[220px]">
-            <svg viewBox="0 0 400 200" className="w-full h-auto text-slate-400 dark:text-slate-600">
-              {/* Simplified Motorcycle Outline */}
-              <circle cx="80" cy="140" r="40" fill="none" stroke="currentColor" strokeWidth="4" />
-              <circle cx="320" cy="140" r="40" fill="none" stroke="currentColor" strokeWidth="4" />
-              <path d="M 80 140 L 160 140 L 220 100 L 180 60 L 120 70 Z" fill="none" stroke="currentColor" strokeWidth="3" />
-              <path d="M 220 100 L 320 140" fill="none" stroke="currentColor" strokeWidth="3" />
-              <path d="M 180 60 L 260 60 L 290 85" fill="none" stroke="currentColor" strokeWidth="3" />
-              <path d="M 260 60 L 280 40" fill="none" stroke="currentColor" strokeWidth="4" />
-              <circle cx="80" cy="140" r="16" fill="currentColor" opacity="0.3" />
-              <circle cx="320" cy="140" r="16" fill="currentColor" opacity="0.3" />
-            </svg>
-
-            {/* Damage Marker Pins */}
-            <div 
-              onClick={() => setSelectedPin('Exhaust scratch')}
-              className="absolute left-[55%] top-[60%] w-6 h-6 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center cursor-pointer shadow-lg animate-pulse"
-              title="Exhaust shield scratch"
-            >
-              1
+          {/* 360 Photo Damage Pin-Map with Click-to-Zoom */}
+          <div
+            onClick={() => setShowFullMapModal(true)}
+            className="group relative border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-900 cursor-pointer shadow-inner"
+          >
+            <img
+              src="/bike-dent-map.png"
+              alt="Exterior Body & Dent Pin-Map 360 Walkaround"
+              className="w-full h-auto object-cover group-hover:scale-[1.02] transition-transform duration-300"
+            />
+            <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-medium text-xs backdrop-blur-[2px]">
+              <ZoomIn className="w-4 h-4" />
+              <span>Click to Enlarge 360° Damage Map</span>
             </div>
-            <div 
-              onClick={() => setSelectedPin('Fuel tank chip')}
-              className="absolute left-[45%] top-[30%] w-6 h-6 rounded-full bg-amber-500 text-white text-[10px] font-bold flex items-center justify-center cursor-pointer shadow-lg"
-              title="Minor paint chip on tank"
-            >
-              2
+            <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/60 text-white text-[10px] font-mono">
+              5 Angles • 10 Points Logged
             </div>
           </div>
 
-          <div className="text-xs text-slate-500 space-y-1 pt-1">
-            <p className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-red-600 inline-block" />
-              <strong>Pin #1:</strong> Deep scratch on silencer heat shield
-            </p>
-            <p className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-amber-500 inline-block" />
-              <strong>Pin #2:</strong> 5mm stone chip on fuel tank left decal
-            </p>
+          {/* Logged Defect Points List */}
+          <div className="space-y-1.5 pt-1">
+            <div className="flex items-center justify-between text-[11px] font-bold text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800 pb-1">
+              <span>Tagged Exterior Flaws</span>
+              <span className="text-[10px] text-slate-400">10 Points Documented</span>
+            </div>
+            <div className="max-h-48 overflow-y-auto space-y-1 pr-1 text-xs">
+              {DENT_MAP_PINS.map((item) => (
+                <div
+                  key={item.pin}
+                  onClick={() => {
+                    setSelectedPin(item.label);
+                    setShowFullMapModal(true);
+                  }}
+                  className="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/60 cursor-pointer transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className={`w-4 h-4 rounded-full ${item.color} text-white text-[10px] font-bold flex items-center justify-center shrink-0`}>
+                      {item.pin}
+                    </span>
+                    <span className="font-medium text-slate-800 dark:text-slate-200">{item.label}</span>
+                  </div>
+                  <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">{item.view}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -293,6 +326,51 @@ export function DviPage() {
           </div>
         </div>
       </div>
+
+      {/* Full-Screen 360 Damage Pin-Map Modal */}
+      {showFullMapModal && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 animate-in fade-in zoom-in-95 duration-200">
+            <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <div>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <Camera className="w-5 h-5 text-blue-600" />
+                  360° Exterior Body &amp; Dent Pin-Map (High Resolution)
+                </h3>
+                <p className="text-xs text-slate-500">
+                  Pre-service physical walkaround audit for {selectedJobCard?.modelName || 'Motorcycle'} • Job Card #{selectedJobCard?.jobNumber || 'JC-2627-001'}
+                </p>
+              </div>
+              <button
+                onClick={() => setShowFullMapModal(false)}
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-4 overflow-y-auto flex-1 flex flex-col items-center justify-center bg-slate-950/20">
+              <img
+                src="/bike-dent-map.png"
+                alt="360 Exterior Inspection Schematic"
+                className="max-h-[70vh] w-auto object-contain rounded-lg shadow-lg border border-slate-200 dark:border-slate-800"
+              />
+            </div>
+
+            <div className="p-3 bg-slate-50 dark:bg-slate-850 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-slate-700 dark:text-slate-300">Front, Rear, Left/Right Sides &amp; Top Angles verified by technician with close-up defect captures.</span>
+              </div>
+              <button
+                onClick={() => setShowFullMapModal(false)}
+                className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs transition"
+              >
+                Done Inspecting
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

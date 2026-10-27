@@ -170,8 +170,13 @@ export function DigitalShowroomPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {comparisonBikes.map(bike => (
               <div key={bike.id} className="p-5 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 space-y-4">
-                <div className="h-28 flex items-center justify-center">
-                  <BikeThumb bodyType={bike.bodyType} color={bike.colors[0]?.hex || '#2563EB'} className="w-40 h-24" />
+                <div className="h-32 flex items-center justify-center p-2 bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200/60 dark:border-slate-800 shadow-sm overflow-hidden">
+                  <BikeThumb
+                    bodyType={bike.bodyType}
+                    color={bike.colors[0]?.hex || '#2563EB'}
+                    imageUrl={bike.imageUrl}
+                    className="w-full h-28 object-contain"
+                  />
                 </div>
 
                 <div className="text-center">
@@ -281,6 +286,7 @@ export function DigitalShowroomPage() {
                     <BikeThumb
                       bodyType={selectedBike.bodyType}
                       color={selectedColor?.hex || '#2563EB'}
+                      imageUrl={selectedBike.imageUrl}
                       className="w-80 h-48 drop-shadow-xl transition-all duration-300"
                     />
                   </div>

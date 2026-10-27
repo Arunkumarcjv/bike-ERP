@@ -10,7 +10,8 @@ import {
   Send, 
   Check, 
   Sparkles,
-  PhoneCall
+  PhoneCall,
+  Camera
 } from 'lucide-react';
 import { formatMoney } from '../../../lib/format';
 import { toast } from 'sonner';
@@ -269,6 +270,29 @@ export function DviCustomerApprovalPage() {
             <span className="text-lg font-black text-blue-600 font-mono">
               {formatMoney(approvedTotalPaise)}
             </span>
+          </div>
+        </div>
+
+        {/* Pre-service 360 Exterior Inspection Walkaround */}
+        <div className="bg-white dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5 space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <Camera className="w-4 h-4 text-blue-600" />
+              Pre-existing Exterior Body &amp; Dent Pin-Map
+            </h3>
+            <span className="text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">
+              5 Angles Documented
+            </span>
+          </div>
+          <p className="text-xs text-slate-500">
+            Tagged scratches, chips and dents recorded by advisor upon vehicle drop-off before workshop intake.
+          </p>
+          <div className="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden shadow-inner">
+            <img
+              src="/bike-dent-map.png"
+              alt="Pre-existing Exterior Body & Dent Pin-Map"
+              className="w-full h-auto object-cover"
+            />
           </div>
         </div>
 

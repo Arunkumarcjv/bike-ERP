@@ -177,6 +177,7 @@ export function Sidebar() {
                   <NavLink
                     key={`pinned-${item.id}`}
                     to={item.path}
+                    end
                     title={sidebarCollapsed ? t(item.labelKey, item.label) : undefined}
                     className={({ isActive }) =>
                       `group flex items-center justify-between px-2.5 py-1.5 rounded-button text-xs font-medium transition-all duration-150 select-none ${
@@ -268,6 +269,7 @@ export function Sidebar() {
                       <NavLink
                         key={item.id}
                         to={item.path}
+                        end
                         title={sidebarCollapsed ? t(item.labelKey, item.label) : undefined}
                         className={({ isActive }) =>
                           `group flex items-center justify-between px-2.5 py-1.5 rounded-button text-xs font-medium transition-all duration-150 select-none ${

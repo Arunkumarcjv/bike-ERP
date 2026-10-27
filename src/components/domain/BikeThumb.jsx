@@ -5,7 +5,18 @@ import React from 'react';
  * Body types: commuter, sports, cruiser, adventure, scooter, ev
  * Tinted by colour hex
  */
-export function BikeThumb({ bodyType = 'commuter', color = '#2563EB', className = 'w-16 h-12' }) {
+export function BikeThumb({ bodyType = 'commuter', color = '#2563EB', className = 'w-16 h-12', imageUrl }) {
+  if (imageUrl) {
+    return (
+      <img
+        src={imageUrl}
+        alt={bodyType}
+        className={`${className} object-contain`}
+        loading="lazy"
+      />
+    );
+  }
+
   const normalizedType = (bodyType || 'commuter').toLowerCase();
 
   switch (normalizedType) {

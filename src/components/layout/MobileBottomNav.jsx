@@ -19,6 +19,7 @@ export function MobileBottomNav() {
           <NavLink
             key={item.to}
             to={item.to}
+            end
             className={({ isActive }) =>
               `flex flex-col items-center justify-center py-1 px-3 rounded-button text-[10px] font-medium transition-colors ${
                 isActive ? 'text-primary font-bold' : 'text-text-muted hover:text-text-main'

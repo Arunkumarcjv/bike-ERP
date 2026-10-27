@@ -19,6 +19,7 @@ export const BIKE_CATALOG = [
     model: 'Hunter 350',
     tagline: 'A Shot of Motorcycling',
     videoUrl: '/hunter.mp4',
+    imageUrl: '/hunter-thumb.png',
     bodyType: BIKE_BODY_TYPES.CRUISER,
     displacementCc: 349,
     fuelType: 'PETROL',
@@ -44,6 +45,7 @@ export const BIKE_CATALOG = [
     model: 'Classic 350',
     tagline: 'Timeless Classic',
     videoUrl: '/classic.mp4',
+    imageUrl: '/classic-thumb.png',
     bodyType: BIKE_BODY_TYPES.CRUISER,
     displacementCc: 349,
     fuelType: 'PETROL',
@@ -69,6 +71,7 @@ export const BIKE_CATALOG = [
     model: 'Himalayan 450',
     tagline: 'Built for All Roads. Built for No Roads.',
     videoUrl: '/himalaya.mp4',
+    imageUrl: '/himalayan-thumb.png',
     bodyType: BIKE_BODY_TYPES.ADVENTURE,
     displacementCc: 452, // > 350cc => 40% GST tier
     fuelType: 'PETROL',

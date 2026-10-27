@@ -40,6 +40,7 @@ export function TopSellingBikes() {
                 <BikeThumb
                   bodyType={bike.bodyType}
                   color={bike.colors[0]?.hex || '#2563EB'}
+                  imageUrl={bike.imageUrl}
                   className="w-14 h-9"
                 />
               </div>

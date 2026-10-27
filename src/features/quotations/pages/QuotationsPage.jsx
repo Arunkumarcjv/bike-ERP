@@ -369,6 +369,7 @@ export function QuotationsPage() {
                     color={
                       selectedBike.colors.find((c) => c.name === selectedColor)?.hex || '#2563EB'
                     }
+                    imageUrl={selectedBike.imageUrl}
                     className="w-16 h-10"
                   />
                 </div>
