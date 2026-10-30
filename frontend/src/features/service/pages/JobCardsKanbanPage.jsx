@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../../store';
 import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui/Card';
 import { Button } from '../../../components/ui/Button';
@@ -32,8 +33,10 @@ const STAGES = [
 ];
 
 export function JobCardsKanbanPage() {
+  const navigate = useNavigate();
   const state = useAppStore();
   const jobCards = state.jobCards || [];
+  const drafts = jobCards.filter((jc) => jc.stage === 'DRAFT');
   const currentUser = state.currentUser;
   const updateJobCardStage = state.updateJobCardStage;
 
@@ -87,7 +90,30 @@ export function JobCardsKanbanPage() {
             Realtime kanban, customer digital OTP estimate authorizations and dual-control QC sign-offs
           </p>
         </div>
+        <Button variant="primary" size="sm" icon={PlusCircle} onClick={() => navigate('/service/jobs/new')}>
+          Create Job Card
+        </Button>
       </div>
+
+      {/* Saved drafts from the Create Job Card form */}
+      {drafts.length > 0 && (
+        <div className="flex items-center gap-2 flex-wrap p-3 rounded-card border border-dashed border-border bg-surface">
+          <span className="text-[11px] font-semibold text-text-muted uppercase tracking-wider mr-1">
+            Drafts ({drafts.length})
+          </span>
+          {drafts.map((d) => (
+            <button
+              key={d.id}
+              onClick={() => navigate(`/service/jobs/new?draft=${d.id}`)}
+              className="text-xs px-2.5 py-1 rounded-full border border-border bg-surface-subtle hover:border-primary/50 hover:text-primary"
+            >
+              <span className="font-mono font-semibold">{d.jobCardNumber}</span>
+              {' · '}
+              {d.customerName || d.registrationNumber || 'Untitled'}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Kanban Board Columns */}
       <div className="flex gap-4 overflow-x-auto pb-4 min-w-full">

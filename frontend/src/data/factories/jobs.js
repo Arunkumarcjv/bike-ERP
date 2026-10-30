@@ -1,4 +1,4 @@
-import { relativeDateIso } from '../../lib/dates';
+import { relativeDateIso, relativeDateString } from '../../lib/dates';
 
 export const SEEDED_BAYS = Array.from({ length: 12 }, (_, i) => {
   const bayNumber = i + 1;
@@ -344,5 +344,48 @@ export const SEEDED_JOB_CARDS = [
     branchId: 'br-blr-central',
     isRepeatComplaint: false,
     freeServiceAvailable: false,
+  },
+];
+
+// Workshop slot bookings for today. Checking one in opens the Create Job Card form pre-filled.
+export const SEEDED_APPOINTMENTS = [
+  {
+    id: 'apt-001',
+    customerName: 'Rohan Mehta',
+    phone: '+91 98450 12345',
+    registrationNumber: 'KA-03-JM-4921',
+    modelName: 'Royal Enfield Hunter 350',
+    date: relativeDateString(0),
+    timeSlot: '08:30 - 09:30',
+    packageId: 'pkg-paid-general',
+    packageName: 'General Minor Service (Express)',
+    status: 'CONFIRMED',
+    jobCardId: null,
+  },
+  {
+    id: 'apt-002',
+    customerName: 'Priya Singh',
+    phone: '+91 98450 12346',
+    registrationNumber: 'KA-03-EV-8840',
+    modelName: 'TVS iQube EV',
+    date: relativeDateString(0),
+    timeSlot: '09:30 - 10:30',
+    packageId: 'pkg-ev-audit',
+    packageName: 'EV Diagnostics & Battery Health Audit',
+    status: 'CONFIRMED',
+    jobCardId: null,
+  },
+  {
+    id: 'apt-003',
+    customerName: 'Arjun Das',
+    phone: '+91 97412 88901',
+    registrationNumber: 'KA-53-MJ-1049',
+    modelName: 'Royal Enfield Classic 350',
+    date: relativeDateString(0),
+    timeSlot: '10:30 - 11:30',
+    packageId: 'pkg-major',
+    packageName: 'Comprehensive Major Service',
+    status: 'CONFIRMED',
+    jobCardId: null,
   },
 ];

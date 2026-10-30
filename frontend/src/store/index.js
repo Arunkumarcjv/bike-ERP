@@ -19,6 +19,17 @@ function nextInvoiceSequence(invoices) {
 
 const replaceById = (list, item) => list.map((x) => (x.id === item.id ? { ...x, ...item } : x));
 
+// JCYYYYMMDD-NNN, continuing today's sequence (the server issues the authoritative number).
+function nextJobCardNumber(jobCards, now = new Date()) {
+  const day = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
+  const prefix = `JC${day}-`;
+  const used = jobCards
+    .map((jc) => jc.jobCardNumber || '')
+    .filter((n) => n.startsWith(prefix))
+    .map((n) => Number(n.slice(prefix.length)) || 0);
+  return `${prefix}${String(Math.max(0, ...used) + 1).padStart(3, '0')}`;
+}
+
 export const useAppStore = create(
   persist(
     (set, get) => ({
@@ -50,7 +61,7 @@ export const useAppStore = create(
       hydrateFromBackend: (data) => {
         const keys = [
           'customers', 'leads', 'quotations', 'bookings', 'salesOrders', 'vehicleStock', 'partsStock', 'jobCards',
-          'bays', 'invoices', 'approvals', 'notifications', 'branches', 'auditLogs',
+          'appointments', 'bays', 'invoices', 'approvals', 'notifications', 'branches', 'auditLogs',
         ];
         const patch = {};
         keys.forEach((k) => {
@@ -208,6 +219,68 @@ export const useAppStore = create(
 
         get().logAudit('CHASSIS_DEALLOCATED', 'VEHICLE_STOCK', unitId, oldUnit, updatedUnit);
         syncToBackend('Chassis release', () => backend.deallocateChassis(unitId));
+      },
+
+      // Service appointments & job card form
+      /** Books a workshop slot. With the backend connected it waits for the server (slot capacity, Sunday rule). */
+      bookAppointment: async (appointment) => {
+        let newApt = { id: `apt-${Date.now()}`, status: 'CONFIRMED', jobCardId: null, ...appointment };
+        if (backend.enabled() && backend.isLoggedIn()) {
+          newApt = await backend.createAppointment(newApt);
+        }
+        set((state) => ({ appointments: [...(state.appointments || []), newApt] }));
+        get().logAudit('APPOINTMENT_BOOKED', 'APPOINTMENT', newApt.id, null, newApt);
+        return newApt;
+      },
+      cancelAppointment: (appointmentId) => {
+        const apt = (get().appointments || []).find((a) => a.id === appointmentId);
+        if (!apt) return;
+        if (apt.status === 'CHECKED_IN') throw new Error('A checked-in appointment cannot be cancelled');
+        set((state) => ({
+          appointments: state.appointments.map((a) => (a.id === appointmentId ? { ...a, status: 'CANCELLED' } : a)),
+        }));
+        get().logAudit('APPOINTMENT_CANCELLED', 'APPOINTMENT', appointmentId, { status: apt.status }, { status: 'CANCELLED' });
+        syncToBackend('Appointment cancellation', () => backend.cancelAppointment(appointmentId));
+      },
+      /**
+       * Saves the Create Job Card form. `stage: 'DRAFT'` keeps it as a draft; any other stage creates the card and
+       * checks its appointment (if any) in. With the backend connected this waits for the server so field errors
+       * (ApiError.body) reach the form; offline it saves locally. Resolves to the saved card.
+       */
+      saveJobCard: async (form, existingId = null) => {
+        const state = get();
+        const now = new Date().toISOString();
+        const existing = existingId ? state.jobCards.find((jc) => jc.id === existingId) : null;
+        const isDraft = form.stage === 'DRAFT';
+        let card = {
+          ...existing,
+          ...form,
+          id: existing?.id || `jc-${Date.now()}`,
+          jobCardNumber: existing?.jobCardNumber || nextJobCardNumber(state.jobCards),
+          branchId: existing?.branchId || state.activeBranchId,
+          createdAt: existing?.createdAt || now,
+          inAt: form.inAt || (isDraft ? null : now),
+        };
+
+        if (backend.enabled() && backend.isLoggedIn()) {
+          const { id, jobCardNumber, createdAt, ...payload } = card;
+          card = existing ? await backend.updateJobCard(id, payload) : await backend.createJobCard({ id, ...payload });
+        }
+
+        const linkAppointment = !isDraft && card.appointmentId;
+        set((s) => ({
+          jobCards: existing ? s.jobCards.map((jc) => (jc.id === card.id ? card : jc)) : [card, ...s.jobCards],
+          ...(linkAppointment
+            ? {
+                appointments: (s.appointments || []).map((a) =>
+                  a.id === card.appointmentId ? { ...a, status: 'CHECKED_IN', jobCardId: card.id } : a
+                ),
+              }
+            : {}),
+        }));
+        get().logAudit(isDraft ? 'JOBCARD_DRAFT_SAVED' : 'JOBCARD_CREATED', 'JOB_CARD', card.id,
+          existing ? { stage: existing.stage } : null, { jobCardNumber: card.jobCardNumber, stage: card.stage });
+        return card;
       },
 
       // Job Cards & Service Bay Actions
@@ -371,6 +444,7 @@ export const useAppStore = create(
         partsStock: state.partsStock,
         bays: state.bays,
         jobCards: state.jobCards,
+        appointments: state.appointments,
         invoices: state.invoices,
         chartOfAccounts: state.chartOfAccounts,
         journalEntries: state.journalEntries,

@@ -136,23 +136,99 @@ class Part(TenantScopedModel):
 
 
 class JobCard(TenantScopedModel):
-    REF_PREFIX = 'jc'
+    """Vehicle service job card (the "Create Vehicle Service Job Card" form)."""
 
-    job_card_number = models.CharField(max_length=32, blank=True)
-    customer_name = models.CharField(max_length=150, blank=True)
-    registration_number = models.CharField(max_length=20, blank=True)
-    model_name = models.CharField(max_length=150, blank=True)
+    REF_PREFIX = 'jc'
+    DRAFT = 'DRAFT'
+    PRIORITIES = ('LOW', 'MEDIUM', 'HIGH', 'URGENT')
+
+    job_card_number = models.CharField(max_length=32, blank=True, db_index=True)
     stage = models.CharField(max_length=24, default='CHECKED_IN', db_index=True)
-    service_type = models.CharField(max_length=32, blank=True)
-    bay_number = models.PositiveSmallIntegerField(null=True, blank=True)
+    appointment_id = models.CharField(max_length=64, blank=True, null=True)
+    branch_id = models.CharField(max_length=64, blank=True)
+
+    # 1. Customer information
+    customer_id = models.CharField(max_length=64, blank=True, null=True)
+    customer_name = models.CharField(max_length=150, blank=True)
+    customer_phone = models.CharField(max_length=20, blank=True)
+    customer_email = models.EmailField(blank=True)
+    customer_address = models.TextField(blank=True)
+
+    # 2. Vehicle information
+    registration_number = models.CharField(max_length=20, blank=True, db_index=True)
+    manufacturer = models.CharField(max_length=60, blank=True)
+    model_name = models.CharField(max_length=150, blank=True)
+    variant = models.CharField(max_length=60, blank=True)
+    vehicle_type = models.CharField(max_length=40, blank=True)
+    chassis_number = models.CharField(max_length=20, blank=True)
+    engine_number = models.CharField(max_length=20, blank=True)
+    colour = models.CharField(max_length=40, blank=True)
+    date_of_sale = models.DateField(null=True, blank=True)
+    odometer_km = models.PositiveIntegerField(null=True, blank=True)
+    key_number = models.CharField(max_length=20, blank=True)
+    selling_dealer = models.CharField(max_length=150, blank=True)
+
+    # 3. Job card information
+    vehicle_tag_number = models.CharField(max_length=20, blank=True)
+    in_at = models.DateTimeField(null=True, blank=True)
+    expected_delivery_at = models.DateTimeField(null=True, blank=True)
+    actual_delivery_at = models.DateTimeField(null=True, blank=True)
+    advisor_name = models.CharField(max_length=150, blank=True)
     technician_id = models.CharField(max_length=64, blank=True, null=True)
     technician_name = models.CharField(max_length=150, blank=True, null=True)
+    priority = models.CharField(max_length=8, choices=[(p, p) for p in PRIORITIES], default='MEDIUM')
+
+    # 4. Service type
+    service_type = models.CharField(max_length=32, blank=True)
+
+    # 5. Insurance & warranty
+    insurance_provider = models.CharField(max_length=80, blank=True)
+    policy_number = models.CharField(max_length=40, blank=True)
+    insurance_start = models.DateField(null=True, blank=True)
+    insurance_expiry = models.DateField(null=True, blank=True)
+    warranty_type = models.CharField(max_length=40, blank=True)
+    warranty_start = models.DateField(null=True, blank=True)
+    warranty_expiry = models.DateField(null=True, blank=True)
+    free_service_coupon = models.CharField(max_length=30, blank=True)
+
+    # 6. Vehicle condition & fuel level
+    fuel_level = models.CharField(max_length=16, blank=True)
+    damage_marks = models.JSONField(default=list, blank=True)   # e.g. ["FRONT_LEFT"]
+    remarks = models.TextField(blank=True)
+
+    # 7. Inspection checklist: [{key, label, condition, remarks}]
+    inspection = models.JSONField(default=list, blank=True)
+    # 8. Complaints: [{category, description, customerRemarks, reportedProblem, priority}]
+    complaints = models.JSONField(default=list, blank=True)
+
+    bay_number = models.PositiveSmallIntegerField(null=True, blank=True)
     grand_total_paise = models.BigIntegerField(default=0)
-    branch_id = models.CharField(max_length=64, blank=True)
 
     class Meta:
         ordering = ['-created_at']
         constraints = _uniq_ref('jobcard')
+
+
+class ServiceAppointment(TenantScopedModel):
+    """A booked workshop slot. Checking the vehicle in turns it into a job card."""
+
+    REF_PREFIX = 'apt'
+    STATUSES = ('CONFIRMED', 'CHECKED_IN', 'CANCELLED', 'NO_SHOW')
+
+    customer_name = models.CharField(max_length=150)
+    phone = models.CharField(max_length=20)
+    registration_number = models.CharField(max_length=20)
+    model_name = models.CharField(max_length=150, blank=True)
+    date = models.DateField(db_index=True)
+    time_slot = models.CharField(max_length=20)
+    package_id = models.CharField(max_length=64, blank=True)
+    package_name = models.CharField(max_length=150, blank=True)
+    status = models.CharField(max_length=16, choices=[(s, s) for s in STATUSES], default='CONFIRMED', db_index=True)
+    job_card_id = models.CharField(max_length=64, blank=True, null=True)
+
+    class Meta:
+        ordering = ['date', 'time_slot']
+        constraints = _uniq_ref('appointment')
 
 
 class Bay(TenantScopedModel):

@@ -37,6 +37,10 @@ export const backend = {
   updateLead: (id, patch) => api.patch(`/leads/${encodeURIComponent(id)}/`, patch),
   createQuotation: (quotation) => api.post('/quotations/', quotation),
   updateQuotation: (id, patch) => api.patch(`/quotations/${encodeURIComponent(id)}/`, patch),
+  createJobCard: (card) => api.post('/job-cards/', card),
+  updateJobCard: (id, patch) => api.patch(`/job-cards/${encodeURIComponent(id)}/`, patch),
+  createAppointment: (appointment) => api.post('/appointments/', appointment),
+  cancelAppointment: (id) => api.post(`/appointments/${encodeURIComponent(id)}/cancel/`),
   setJobCardStage: (id, stage, extra = {}) =>
     api.post(`/job-cards/${encodeURIComponent(id)}/stage/`, { stage, ...extra }),
   assignBay: (bayNumber, jobCardId, branchId) => api.post('/bays/assign/', { bayNumber, jobCardId, branchId }),

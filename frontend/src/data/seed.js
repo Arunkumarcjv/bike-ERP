@@ -9,7 +9,7 @@ import { SEEDED_CUSTOMERS } from './factories/people';
 import { SEEDED_VEHICLE_UNITS } from './factories/bikes';
 import { SEEDED_PARTS } from './factories/parts';
 import { SEEDED_LEADS, SEEDED_QUOTATIONS, SEEDED_BOOKINGS, SEEDED_SALES_ORDERS } from './factories/orders';
-import { SEEDED_BAYS, SEEDED_JOB_CARDS } from './factories/jobs';
+import { SEEDED_APPOINTMENTS, SEEDED_BAYS, SEEDED_JOB_CARDS } from './factories/jobs';
 import { SEEDED_INVOICES, SEEDED_CHART_OF_ACCOUNTS, SEEDED_JOURNAL_ENTRIES } from './factories/invoices';
 import { SEEDED_WHATSAPP_CONVERSATIONS, SEEDED_WA_TEMPLATES } from './factories/messages';
 import { relativeDateIso } from '../lib/dates';
@@ -37,6 +37,7 @@ export function getInitialSeedData() {
     salesOrders: SEEDED_SALES_ORDERS,
     bays: SEEDED_BAYS,
     jobCards: SEEDED_JOB_CARDS,
+    appointments: SEEDED_APPOINTMENTS,
     invoices: SEEDED_INVOICES,
     chartOfAccounts: SEEDED_CHART_OF_ACCOUNTS,
     journalEntries: SEEDED_JOURNAL_ENTRIES,

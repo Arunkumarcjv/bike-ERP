@@ -126,6 +126,14 @@ export const NAVIGATION_GROUPS = [
         permission: PERMISSIONS.SERVICE_APPOINTMENTS_MANAGE,
       },
       {
+        id: 'create_job_card',
+        labelKey: 'nav.create_job_card',
+        label: 'Create Job Card',
+        path: '/service/jobs/new',
+        icon: 'FilePlus2',
+        permission: PERMISSIONS.JOBCARD_CREATE,
+      },
+      {
         id: 'job_cards',
         labelKey: 'nav.job_cards',
         label: 'Job Cards Kanban',

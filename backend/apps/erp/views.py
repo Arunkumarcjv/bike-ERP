@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.utils import timezone
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
@@ -102,9 +103,33 @@ class JobCardViewSet(TenantScopedViewSet):
     serializer_class = serializers.JobCardSerializer
     write_roles = SERVICE
     action_roles = {'stage': SERVICE}
-    filterset_fields = ('stage', 'bay_number', 'technician_id')
-    search_fields = ('job_card_number', 'registration_number', 'customer_name')
+    filterset_fields = ('stage', 'bay_number', 'technician_id', 'appointment_id', 'service_type', 'priority')
+    search_fields = ('job_card_number', 'registration_number', 'customer_name', 'customer_phone', 'chassis_number')
     audit_entity = 'JOB_CARD'
+
+    def perform_create(self, serializer):
+        """Assigns JCYYYYMMDD-NNN, and checks the linked appointment in when the card is not a draft."""
+        tenant = self.request.tenant
+        with transaction.atomic():
+            data = serializer.validated_data
+            card = serializer.save(
+                tenant=tenant,
+                job_card_number=services.next_job_card_number(tenant),
+                branch_id=data.get('branch_id') or services.default_branch_ref(tenant),
+                in_at=data.get('in_at') or (None if data.get('stage') == models.JobCard.DRAFT else timezone.now()),
+            )
+            if card.appointment_id and card.stage != models.JobCard.DRAFT:
+                services.link_appointment(tenant, card.appointment_id, card.ref)
+        record_audit(self.request, 'JOBCARD_CREATED' if card.stage != models.JobCard.DRAFT else 'JOBCARD_DRAFT_SAVED',
+                     'JOB_CARD', card.ref, None, {'jobCardNumber': card.job_card_number, 'stage': card.stage})
+
+    def perform_update(self, serializer):
+        was_draft = serializer.instance.stage == models.JobCard.DRAFT
+        with transaction.atomic():
+            super().perform_update(serializer)
+            card = serializer.instance
+            if was_draft and card.stage != models.JobCard.DRAFT and card.appointment_id:
+                services.link_appointment(self.request.tenant, card.appointment_id, card.ref)
 
     @extend_schema(request=serializers.StageSerializer, responses=serializers.JobCardSerializer)
     @action(detail=True, methods=['post'])
@@ -118,6 +143,29 @@ class JobCardViewSet(TenantScopedViewSet):
         record_audit(request, 'JOBCARD_STAGE_UPDATED', 'JOB_CARD', card.ref, {'stage': old_stage},
                      {'stage': card.stage})
         return Response(self.get_serializer(card).data)
+
+
+@extend_schema(tags=['service'])
+class ServiceAppointmentViewSet(TenantScopedViewSet):
+    """Workshop slot bookings. Sundays are closed and each time slot has a fixed capacity."""
+
+    queryset = models.ServiceAppointment.objects.all()
+    serializer_class = serializers.ServiceAppointmentSerializer
+    write_roles = SERVICE
+    filterset_fields = ('date', 'status', 'time_slot')
+    search_fields = ('customer_name', 'phone', 'registration_number')
+    audit_entity = 'APPOINTMENT'
+
+    @extend_schema(request=None, responses=serializers.ServiceAppointmentSerializer)
+    @action(detail=True, methods=['post'])
+    def cancel(self, request, id=None):
+        appointment = self.get_object()
+        if appointment.status == 'CHECKED_IN':
+            return Response({'detail': 'A checked-in appointment cannot be cancelled.'}, status=400)
+        appointment.status = 'CANCELLED'
+        appointment.save(update_fields=['status', 'updated_at'])
+        record_audit(request, 'APPOINTMENT_CANCELLED', 'APPOINTMENT', appointment.ref, None, {'status': 'CANCELLED'})
+        return Response(self.get_serializer(appointment).data)
 
 
 @extend_schema(tags=['service'])

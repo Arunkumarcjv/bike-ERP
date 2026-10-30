@@ -27,6 +27,7 @@ import { PurchasesPage } from './features/purchases/pages/PurchasesPage';
 // Workshop
 import { AppointmentsPage } from './features/service/pages/AppointmentsPage';
 import { JobCardsKanbanPage } from './features/service/pages/JobCardsKanbanPage';
+import JobCardCreatePage from './features/service/pages/JobCardCreatePage';
 import { LiveBaysPage } from './features/service/pages/LiveBaysPage';
 import DviPage from './features/service/pages/DviPage';
 import PickupDropPage from './features/service/pages/PickupDropPage';
@@ -233,6 +234,14 @@ export const router = createBrowserRouter([
         element: (
           <RouteGuard permission={PERMISSIONS.SERVICE_APPOINTMENTS_MANAGE}>
             <AppointmentsPage />
+          </RouteGuard>
+        ),
+      },
+      {
+        path: 'service/jobs/new',
+        element: (
+          <RouteGuard permission={PERMISSIONS.JOBCARD_CREATE}>
+            <JobCardCreatePage />
           </RouteGuard>
         ),
       },

@@ -5,7 +5,7 @@ from rest_framework.exceptions import NotFound, PermissionDenied, ValidationErro
 
 from apps.tenants.models import Branch
 
-from .models import Approval, Bay, Booking, DocumentSequence, Invoice, JobCard, VehicleUnit
+from .models import Approval, Bay, Booking, DocumentSequence, Invoice, JobCard, ServiceAppointment, VehicleUnit
 
 FY_CODE = '2627'
 
@@ -102,6 +102,26 @@ def deallocate_chassis(tenant, unit_ref):
     unit.allocated_booking_id = None
     unit.save()
     return unit
+
+
+def next_job_card_number(tenant, when=None):
+    """Daily sequence, e.g. JC20251014-001 (as on the job card form)."""
+    day = timezone.localtime(when or timezone.now()).strftime('%Y%m%d')
+    return f'JC{day}-{DocumentSequence.next_value(tenant, f"jobcard-{day}"):03d}'
+
+
+@transaction.atomic
+def link_appointment(tenant, appointment_ref, job_card_ref):
+    """Checking a booked vehicle in: the appointment points at its job card and leaves the open list."""
+    appointment = _get(ServiceAppointment, tenant, ref=appointment_ref)
+    if appointment.status == 'CANCELLED':
+        raise ValidationError({'appointmentId': 'This appointment was cancelled.'})
+    if appointment.job_card_id and appointment.job_card_id != job_card_ref:
+        raise ValidationError({'appointmentId': f'Appointment already has job card {appointment.job_card_id}.'})
+    appointment.job_card_id = job_card_ref
+    appointment.status = 'CHECKED_IN'
+    appointment.save(update_fields=['job_card_id', 'status', 'updated_at'])
+    return appointment
 
 
 def next_invoice_number(tenant):

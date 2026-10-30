@@ -73,6 +73,7 @@ BOOTSTRAP_SETS = {
     'vehicleStock': (erp.VehicleUnit, s.VehicleUnitSerializer),
     'partsStock': (erp.Part, s.PartSerializer),
     'jobCards': (erp.JobCard, s.JobCardSerializer),
+    'appointments': (erp.ServiceAppointment, s.ServiceAppointmentSerializer),
     'bays': (erp.Bay, s.BaySerializer),
     'invoices': (erp.Invoice, s.InvoiceSerializer),
     'approvals': (erp.Approval, s.ApprovalSerializer),

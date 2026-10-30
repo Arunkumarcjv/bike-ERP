@@ -13,7 +13,7 @@ const seed = getInitialSeedData();
 
 const KEYS = [
   'dealership', 'branches', 'customers', 'vehicleStock', 'partsStock', 'leads', 'quotations', 'bookings',
-  'salesOrders', 'bays', 'jobCards', 'invoices', 'approvals', 'notifications',
+  'salesOrders', 'bays', 'jobCards', 'appointments', 'invoices', 'approvals', 'notifications',
 ];
 
 const payload = { exportedAt: new Date().toISOString(), users: ROLE_PRESETS };

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../../store';
 import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui/Card';
 import { Button } from '../../../components/ui/Button';
 import { StatusBadge } from '../../../components/ui/StatusBadge';
-import { Modal } from '../../../components/ui/Modal';
 import { getAvailableSlotsForDate, isDateBlockedForService } from '../../../lib/slots';
-import { formatTimeOnly, formatDate } from '../../../lib/format';
+import { formatDate } from '../../../lib/format';
+import { relativeDateString } from '../../../lib/dates';
 import {
   CalendarClock,
   PlusCircle,
@@ -13,85 +14,36 @@ import {
   Calendar,
   AlertTriangle,
   CheckCircle,
-  Wrench,
-  Bike,
+  FilePlus2,
+  ExternalLink,
+  XCircle,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
 export function AppointmentsPage() {
-  const servicePackages = useAppStore((state) => state.catalogs.servicePackages || []);
-  const [selectedDate, setSelectedDate] = useState('2026-10-26');
-  const [bookingModalOpen, setBookingModalOpen] = useState(false);
-
-  const [customerName, setCustomerName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [regNo, setRegNo] = useState('');
-  const [selectedSlot, setSelectedSlot] = useState('08:30 - 09:30');
-  const [selectedPkg, setSelectedPkg] = useState(servicePackages[0]?.id || '');
-
-  const [appointments, setAppointments] = useState([
-    {
-      id: 'apt-001',
-      customerName: 'Rohan Mehta',
-      phone: '+91 98450 12345',
-      registrationNumber: 'KA-03-JM-4921',
-      modelName: 'Hunter 350',
-      date: '2026-10-26',
-      timeSlot: '08:30 - 09:30',
-      packageName: 'General Minor Service (Express)',
-      status: 'CONFIRMED',
-    },
-    {
-      id: 'apt-002',
-      customerName: 'Priya Singh',
-      phone: '+91 98450 12345',
-      registrationNumber: 'KA-03-EV-8840',
-      modelName: 'TVS iQube EV',
-      date: '2026-10-26',
-      timeSlot: '09:30 - 10:30',
-      packageName: 'EV Diagnostics & Battery Health Audit',
-      status: 'CONFIRMED',
-    },
-    {
-      id: 'apt-003',
-      customerName: 'Arjun Das',
-      phone: '+91 97412 88901',
-      registrationNumber: 'KA-53-MJ-1049',
-      modelName: 'Classic 350',
-      date: '2026-10-26',
-      timeSlot: '10:30 - 11:30',
-      packageName: 'Comprehensive Major Service',
-      status: 'CONFIRMED',
-    },
-  ]);
-
+  const navigate = useNavigate();
+  const appointments = useAppStore((state) => state.appointments || []);
+  const jobCards = useAppStore((state) => state.jobCards || []);
+  const cancelAppointment = useAppStore((state) => state.cancelAppointment);
+  // Was hardcoded to 2026-10-26, which hid every booking made on any other day.
+  const [selectedDate, setSelectedDate] = useState(relativeDateString(0));
   const isSundayBlocked = isDateBlockedForService(selectedDate);
   const slots = getAvailableSlotsForDate(selectedDate, appointments);
 
-  const handleBookAppointment = (e) => {
-    e.preventDefault();
+  // Booking opens the full Create Vehicle Service Job Card form for the selected date.
+  const startBooking = () => {
     if (isSundayBlocked) {
       toast.error('Workshop is closed on Sundays for routine periodic maintenance.');
       return;
     }
+    navigate(`/service/jobs/new?book=1&date=${selectedDate}`);
+  };
 
-    const pkg = servicePackages.find((p) => p.id === selectedPkg);
-
-    const newApt = {
-      id: `apt-${Date.now()}`,
-      customerName,
-      phone,
-      registrationNumber: regNo.toUpperCase(),
-      modelName: 'Royal Enfield / Honda',
-      date: selectedDate,
-      timeSlot: selectedSlot,
-      packageName: pkg ? pkg.name : 'General Service',
-      status: 'CONFIRMED',
-    };
-
-    setAppointments([...appointments, newApt]);
-    setBookingModalOpen(false);
-    toast.success(`Service appointment confirmed for ${customerName} at ${selectedSlot}!`);
+  const openJobCard = (apt) => {
+    const card = jobCards.find((jc) => jc.id === apt.jobCardId);
+    if (card?.stage === 'DRAFT') navigate(`/service/jobs/new?draft=${card.id}`);
+    else if (card) navigate('/service/jobs');
+    else navigate(`/service/jobs/new?appointment=${apt.id}`);
   };
 
   return (
@@ -109,7 +61,7 @@ export function AppointmentsPage() {
           variant="primary"
           size="sm"
           icon={PlusCircle}
-          onClick={() => setBookingModalOpen(true)}
+          onClick={startBooking}
         >
           Book Service Appointment
         </Button>
@@ -185,11 +137,20 @@ export function AppointmentsPage() {
                 <th className="p-3.5">Time Slot</th>
                 <th className="p-3.5">Service Package</th>
                 <th className="p-3.5">Status</th>
+                <th className="p-3.5 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/60">
+              {appointments.filter((a) => a.date === selectedDate).length === 0 && (
+                <tr>
+                  <td colSpan={8} className="p-6 text-center text-text-muted">
+                    No appointments on this date.
+                  </td>
+                </tr>
+              )}
               {appointments
                 .filter((a) => a.date === selectedDate)
+                .sort((a, b) => a.timeSlot.localeCompare(b.timeSlot))
                 .map((apt) => (
                   <tr key={apt.id} className="hover:bg-surface-subtle/70 transition-colors">
                     <td className="p-3.5 font-bold text-text-main">{apt.customerName}</td>
@@ -201,6 +162,34 @@ export function AppointmentsPage() {
                     <td className="p-3.5">
                       <StatusBadge status={apt.status} />
                     </td>
+                    <td className="p-3.5 text-right whitespace-nowrap">
+                      {apt.status === 'CANCELLED' ? (
+                        <span className="text-text-muted">—</span>
+                      ) : apt.jobCardId ? (
+                        <button
+                          onClick={() => openJobCard(apt)}
+                          className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" /> View Job Card
+                        </button>
+                      ) : (
+                        <div className="inline-flex items-center gap-2">
+                          <Button size="sm" variant="primary" icon={FilePlus2} onClick={() => openJobCard(apt)}>
+                            Create Job Card
+                          </Button>
+                          <button
+                            onClick={() => {
+                              cancelAppointment(apt.id);
+                              toast.info(`Appointment for ${apt.customerName} cancelled.`);
+                            }}
+                            className="p-1.5 rounded text-text-muted hover:text-status-red hover:bg-red-50"
+                            title="Cancel appointment"
+                          >
+                            <XCircle className="w-4 h-4" />
+                          </button>
+                        </div>
+                      )}
+                    </td>
                   </tr>
                 ))}
             </tbody>
@@ -208,92 +197,6 @@ export function AppointmentsPage() {
         </div>
       </Card>
 
-      {/* Book Appointment Modal */}
-      <Modal
-        isOpen={bookingModalOpen}
-        onClose={() => setBookingModalOpen(false)}
-        title="Schedule Service Workshop Appointment"
-        size="md"
-      >
-        <form onSubmit={handleBookAppointment} className="space-y-4 text-xs">
-          <div>
-            <label className="block font-semibold text-text-main mb-1">Customer Full Name</label>
-            <input
-              type="text"
-              required
-              value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
-              placeholder="e.g. Rohith V."
-              className="w-full p-2.5 rounded-input border border-border bg-surface-subtle text-text-main"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block font-semibold text-text-main mb-1">Mobile Phone (+91)</label>
-              <input
-                type="tel"
-                required
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="9845012345"
-                className="w-full p-2.5 rounded-input border border-border bg-surface-subtle text-text-main"
-              />
-            </div>
-            <div>
-              <label className="block font-semibold text-text-main mb-1">Registration (KA-XX-XX-XXXX)</label>
-              <input
-                type="text"
-                required
-                value={regNo}
-                onChange={(e) => setRegNo(e.target.value)}
-                placeholder="KA-03-JM-4921"
-                className="w-full p-2.5 font-mono uppercase rounded-input border border-border bg-surface-subtle text-text-main"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block font-semibold text-text-main mb-1">Time Slot Window</label>
-              <select
-                value={selectedSlot}
-                onChange={(e) => setSelectedSlot(e.target.value)}
-                className="w-full p-2.5 rounded-input border border-border bg-surface-subtle text-text-main"
-              >
-                {slots.map((s) => (
-                  <option key={s.slot} value={s.slot} disabled={s.isFull}>
-                    {s.slot} ({s.availableBays} bays left)
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block font-semibold text-text-main mb-1">Service Package</label>
-              <select
-                value={selectedPkg}
-                onChange={(e) => setSelectedPkg(e.target.value)}
-                className="w-full p-2.5 rounded-input border border-border bg-surface-subtle text-text-main"
-              >
-                {servicePackages.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="flex justify-end gap-2 pt-4 border-t border-border">
-            <Button variant="secondary" type="button" onClick={() => setBookingModalOpen(false)}>
-              Cancel
-            </Button>
-            <Button variant="primary" type="submit">
-              Confirm Appointment
-            </Button>
-          </div>
-        </form>
-      </Modal>
     </div>
   );
 }

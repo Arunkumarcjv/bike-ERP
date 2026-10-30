@@ -12,6 +12,14 @@ export function isDateBlockedForService(dateInput) {
   }
 }
 
+/** True when the slot's start time has already passed (past dates count as passed). */
+export function isSlotInPast(dateStr, slot, now = new Date()) {
+  const [h, m] = slot.split(' - ')[0].split(':').map(Number);
+  const start = new Date(`${dateStr}T00:00:00`);
+  start.setHours(h, m, 0, 0);
+  return start < now;
+}
+
 export function getAvailableSlotsForDate(dateStr, existingAppointments = []) {
   if (isDateBlockedForService(dateStr)) {
     return [];
