@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none">
+  <title>AKASH Bajaj</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="120" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1D4ED8"/>
+      <stop offset="1" stop-color="#0B1F4B"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="26" fill="url(#bg)"/>
+  <!-- "A" -->
+  <path transform="translate(-3 0)" d="M18 84L37 30H47L66 84H55.5L51.3 71.5H32.7L28.5 84H18ZM35.6 62.5H48.4L42 43.2L35.6 62.5Z" fill="#FFFFFF"/>
+  <!-- "B" -->
+  <path transform="translate(2 0)" d="M66 30H86.5C97 30 103 35.2 103 43.4C103 49 99.8 52.9 95.2 54.3C100.8 55.5 105 59.9 105 66.5C105 76.6 98.2 84 86 84H66V30ZM76.4 52H84.6C89.6 52 92.4 49.6 92.4 45.6C92.4 41.6 89.6 39.2 84.6 39.2H76.4V52ZM76.4 74.8H85.6C91.2 74.8 94.3 72.1 94.3 67.5C94.3 62.9 91.2 60.4 85.6 60.4H76.4V74.8Z" fill="#FFFFFF"/>
+  <!-- speed stripe -->
+  <path d="M18 96H86" stroke="#38BDF8" stroke-width="6" stroke-linecap="round"/>
+  <path d="M94 96H102" stroke="#F59E0B" stroke-width="6" stroke-linecap="round"/>
+</svg>

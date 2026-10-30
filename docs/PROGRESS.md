@@ -1,4 +1,4 @@
-# BikeERP Implementation Progress Tracker
+# AKASH Bajaj Implementation Progress Tracker
 
 ## Step 0: Initial Audit Matrix
 | Module Requested | Status | Existing / Target File Path | Strategy |

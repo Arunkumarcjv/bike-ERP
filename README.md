@@ -1,16 +1,25 @@
-# BikeERP — Enterprise Two-Wheeler Showroom & Service Workshop ERP
+# AKASH Bajaj — Enterprise Two-Wheeler Showroom & Service Workshop ERP
 
-> **dealership**: Vennila Bike Showroom (Bangalore Central Flagship)  
+> **dealership**: AKASH Bajaj (Bangalore Central Flagship)  
 > **GSTIN**: `29AABCB1829M1ZK` (State Code: 29 Karnataka)  
-> **Architecture**: Pure frontend on typed service layer over seeded Zustand store with browser persistence (`IndexedDB` / `localStorage`). Zero backend required; 100% ready for swap to Django REST API without modifying UI.
+> **Architecture**: React frontend over a seeded Zustand store. It runs offline on demo data by default, or against the multi-tenant **Django + PostgreSQL + JWT** backend in [`backend/`](backend/README.md) when `VITE_API_BASE_URL` is set. With the backend, you get real login, server-enforced rules, Swagger docs at `/api/docs/`, and API/audit logs on the dashboard.
 
 ---
+
+## 📁 Project Layout
+
+```
+bike-ERP/
+├── frontend/   React 19 + Vite app (npm commands run here)
+├── backend/    Django + PostgreSQL + JWT API, see backend/README.md
+└── docs/       Progress tracker & architecture decisions
+```
 
 ## 🚀 Quick Start
 
 ### 1. Install & Run Dev Server
 ```bash
-cd bikeerp-frontend
+cd frontend
 npm install
 npm run dev
 ```
@@ -164,7 +173,7 @@ Generates production-optimized bundle in `dist/`.
 ---
 
 ## 🎨 Design System
-Defined in `src/styles/tokens.css` and mapped in `tailwind.config.js`:
+Defined in `frontend/src/styles/tokens.css` and mapped in `frontend/tailwind.config.js`:
 - **Sidebar**: Deep navy (`#0B1F4B`) with active blue pill (`#2563EB`).
 - **Surface**: Light blue-grey (`#F3F7FD`) with white card surfaces and 12px border radius.
 - **Dark Mode**: Navy-tinted surfaces (`#0F172A` / `#1E293B`) via data-theme attribute.

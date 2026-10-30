@@ -1,0 +1,105 @@
+import { relativeDateIso } from '../../lib/dates';
+
+export const SEEDED_WHATSAPP_CONVERSATIONS = [
+  {
+    id: 'wa-conv-rohan',
+    customerId: 'cust-rohan-mehta',
+    customerName: 'Rohan Mehta',
+    phone: '+91 98450 12345',
+    unreadCount: 0,
+    lastMessageAt: relativeDateIso(0, 11, 35),
+    isAiPaused: false,
+    staffTakeover: false,
+    within24hWindow: true,
+    messages: [
+      {
+        id: 'msg-1',
+        sender: 'BOT',
+        direction: 'OUTBOUND',
+        text: 'Vanakkam Rohan sir! Your Hunter 350 (KA-03-JM-4921) has entered Bay #01 for periodic maintenance. Estimated delivery today 5:30 PM. Track live: https://akashbajaj.com/portal/job/jc-2627-001',
+        timestamp: relativeDateIso(0, 11, 28),
+        status: 'READ',
+      },
+      {
+        id: 'msg-2',
+        sender: 'CUSTOMER',
+        direction: 'INBOUND',
+        text: 'Thanks! Can you also check the front brake squeak noise?',
+        timestamp: relativeDateIso(0, 11, 30),
+        status: 'RECEIVED',
+      },
+      {
+        id: 'msg-3',
+        sender: 'BOT',
+        direction: 'OUTBOUND',
+        text: 'Sure sir! We have added "Front brake squeak check" to Job Card #JC/2627/00001. Technician Manoj is attending to it now.',
+        timestamp: relativeDateIso(0, 11, 31),
+        status: 'READ',
+      },
+    ],
+  },
+  {
+    id: 'wa-conv-priya',
+    customerId: 'cust-priya-singh',
+    customerName: 'Priya Singh',
+    phone: '+91 98450 12345',
+    unreadCount: 1,
+    lastMessageAt: relativeDateIso(0, 12, 10),
+    isAiPaused: false,
+    staffTakeover: false,
+    within24hWindow: true,
+    messages: [
+      {
+        id: 'msg-p1',
+        sender: 'CUSTOMER',
+        direction: 'INBOUND',
+        text: 'Hi, when will my iQube software update be completed?',
+        timestamp: relativeDateIso(0, 12, 10),
+        status: 'RECEIVED',
+      },
+    ],
+  },
+];
+
+export const SEEDED_WA_TEMPLATES = [
+  {
+    id: 'tpl-service-due-en',
+    code: 'SERVICE_DUE_REMINDER_V2',
+    name: 'Periodic Service Due Reminder',
+    category: 'UTILITY',
+    language: 'en',
+    status: 'APPROVED', // APPROVED, PENDING, REJECTED
+    body: 'Dear {{1}}, your {{2}} ({{3}}) is due for periodic service at AKASH Bajaj. Book now to keep your warranty active and enjoy smooth rides: {{4}}',
+    exampleParams: ['Rohan', 'Hunter 350', 'KA-03-JM-4921', 'https://akashbajaj.com/book'],
+  },
+  {
+    id: 'tpl-service-due-ta',
+    code: 'SERVICE_DUE_REMINDER_TA',
+    name: 'Periodic Service Due Reminder (Tamil)',
+    category: 'UTILITY',
+    language: 'ta',
+    status: 'APPROVED',
+    body: 'வணக்கம் {{1}}, உங்கள் {{2}} ({{3}}) வாகனத்திற்கான சர்வீஸ் நேரம் வந்துவிட்டது. வெண்ணிலா பைக் ஷோரூமில் உடனே புக் செய்யுங்கள்: {{4}}',
+    exampleParams: ['ரோகன்', 'ஹண்டர் 350', 'KA-03-JM-4921', 'https://akashbajaj.com/book'],
+  },
+  {
+    id: 'tpl-delivery-ready',
+    code: 'VEHICLE_READY_DELIVERY',
+    name: 'Vehicle Ready for Delivery',
+    category: 'UTILITY',
+    language: 'en',
+    status: 'APPROVED',
+    body: 'Namaste {{1}}! Great news! Your brand new {{2}} is ready for grand delivery at our Bangalore Central Showroom. Please bring your original Aadhaar/DL for gate pass handover.',
+    exampleParams: ['Arjun', 'Classic 350 Stealth'],
+  },
+  {
+    id: 'tpl-festival-offer',
+    code: 'FESTIVAL_OFFER_DIWALI',
+    name: 'Diwali Festive Mega Savings',
+    category: 'MARKETING',
+    language: 'en',
+    status: 'APPROVED',
+    body: 'Celebrate this Festive Season with AKASH Bajaj! Get zero down payment, ₹5,000 exchange bonus, and free helmet + 5-yr AMC on all Royal Enfield & Honda bikes. Offer valid till Sunday: {{1}}',
+    exampleParams: ['https://akashbajaj.com/offers'],
+  },
+];
