@@ -101,7 +101,7 @@ export function AuditPage() {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="space-y-6">
       {/* Statutory Retention Banner */}
       <div className="p-4 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 rounded-xl flex items-start gap-3 shadow-sm">
         <ShieldAlert className="w-5 h-5 text-blue-700 dark:text-blue-400 shrink-0 mt-0.5" />

@@ -16,6 +16,7 @@ import {
   CreditCard,
   Repeat,
   Warehouse,
+  Search,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -34,6 +35,33 @@ export function BookingsPage() {
   const [activeBooking, setActiveBooking] = useState(null);
   const [selectedChassis, setSelectedChassis] = useState('');
   const [cancelReason, setCancelReason] = useState('Customer opted for car purchase');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('ALL');
+
+  // Summary Metrics
+  const totalBookings = bookings.length;
+  const totalTokenPaise = bookings.reduce((sum, b) => sum + (b.tokenAmountPaise || 0), 0);
+  const allocatedCount = bookings.filter((b) => b.allocatedChassisNumber).length;
+  const unallocatedCount = totalBookings - allocatedCount;
+
+  // Filtered Bookings
+  const filteredBookings = bookings.filter((b) => {
+    const matchesSearch =
+      !searchTerm ||
+      b.bookingNumber?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      b.customerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      b.phone?.includes(searchTerm) ||
+      b.modelName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      b.allocatedChassisNumber?.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesStatus =
+      statusFilter === 'ALL' ||
+      (statusFilter === 'ALLOCATED' && b.allocatedChassisNumber) ||
+      (statusFilter === 'UNALLOCATED' && !b.allocatedChassisNumber) ||
+      b.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  });
 
   // Available chassis for the active booking model
   const eligibleChassisUnits = vehicleStock.filter((v) => {
@@ -81,13 +109,16 @@ export function BookingsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-text-main">Vehicle Reservations & Bookings</h1>
+          <h1 className="text-xl font-bold text-text-main flex items-center gap-2">
+            <BookmarkCheck className="w-5 h-5 text-primary shrink-0" />
+            Vehicle Reservations &amp; Bookings
+          </h1>
           <p className="text-xs text-text-muted mt-0.5">
             Token receipts, single-unit chassis allocation gates and delivery reservations
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 shrink-0">
           <Button
             variant="primary"
             size="sm"
@@ -99,89 +130,180 @@ export function BookingsPage() {
         </div>
       </div>
 
+      {/* 4 Summary Metric Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-surface p-4 rounded-card border border-border shadow-soft">
+          <div className="text-xs text-text-muted">Total Reservations</div>
+          <div className="text-2xl font-bold text-text-main mt-1 tabular-nums">{totalBookings} Active</div>
+          <div className="text-[11px] text-text-muted mt-0.5">Confirmed showroom bookings</div>
+        </div>
+
+        <div className="bg-surface p-4 rounded-card border border-border shadow-soft">
+          <div className="text-xs text-text-muted">Total Token Advances</div>
+          <div className="text-2xl font-bold text-status-green mt-1 tabular-nums">
+            {formatMoney(totalTokenPaise)}
+          </div>
+          <div className="text-[11px] text-status-green font-semibold mt-0.5">Adjustable in final invoice</div>
+        </div>
+
+        <div className="bg-surface p-4 rounded-card border border-border shadow-soft">
+          <div className="text-xs text-text-muted">Chassis VIN Allocated</div>
+          <div className="text-2xl font-bold text-primary mt-1 tabular-nums">
+            {allocatedCount} of {totalBookings}
+          </div>
+          <div className="text-[11px] text-text-muted mt-0.5">Single-chassis locked to stock</div>
+        </div>
+
+        <div className="bg-surface p-4 rounded-card border border-border shadow-soft">
+          <div className="text-xs text-text-muted">Awaiting VIN Allocation</div>
+          <div className="text-2xl font-bold text-status-amber mt-1 tabular-nums">
+            {unallocatedCount} Units
+          </div>
+          <div className="text-[11px] text-status-amber font-semibold mt-0.5">Pending stock intake or transfer</div>
+        </div>
+      </div>
+
+      {/* Search and Filters */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-surface p-3 rounded-card border border-border shadow-soft">
+        <div className="relative flex-1 max-w-md">
+          <Search className="w-4 h-4 text-text-muted absolute left-3 top-1/2 -translate-y-1/2 shrink-0" />
+          <input
+            type="text"
+            placeholder="Search booking #, customer, phone, or VIN..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-9 pr-3 py-1.5 text-xs rounded-input bg-surface-subtle border border-border text-text-main placeholder:text-text-muted focus:outline-none focus:border-primary transition-colors"
+          />
+        </div>
+
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+          {[
+            { id: 'ALL', label: `All (${totalBookings})` },
+            { id: 'CONFIRMED', label: 'Confirmed' },
+            { id: 'ALLOCATED', label: `Allocated (${allocatedCount})` },
+            { id: 'UNALLOCATED', label: `Awaiting VIN (${unallocatedCount})` },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setStatusFilter(tab.id)}
+              className={`px-3 py-1.5 rounded-button text-xs font-semibold whitespace-nowrap transition-colors ${
+                statusFilter === tab.id
+                  ? 'bg-primary text-white shadow-xs'
+                  : 'bg-surface-subtle text-text-muted hover:text-text-main border border-border'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Bookings Table */}
       <Card className="overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
               <tr className="bg-surface-subtle border-b border-border text-text-muted font-semibold uppercase text-[11px]">
-                <th className="p-3.5">Booking #</th>
-                <th className="p-3.5">Customer</th>
-                <th className="p-3.5">Model & Colour</th>
-                <th className="p-3.5">Token Paid</th>
-                <th className="p-3.5">Allocated Chassis (VIN)</th>
-                <th className="p-3.5">Est. Delivery</th>
-                <th className="p-3.5">Status</th>
-                <th className="p-3.5 text-right">Actions</th>
+                <th className="px-4 py-3 whitespace-nowrap">Booking #</th>
+                <th className="px-4 py-3 whitespace-nowrap">Customer</th>
+                <th className="px-4 py-3 whitespace-nowrap">Model &amp; Colour</th>
+                <th className="px-4 py-3 whitespace-nowrap">Token Paid</th>
+                <th className="px-4 py-3 whitespace-nowrap">Allocated Chassis (VIN)</th>
+                <th className="px-4 py-3 whitespace-nowrap">Est. Delivery</th>
+                <th className="px-4 py-3 whitespace-nowrap">Status</th>
+                <th className="px-4 py-3 text-right whitespace-nowrap pr-4">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/60">
-              {bookings.map((booking) => (
-                <tr key={booking.id} className="hover:bg-surface-subtle/70 transition-colors">
-                  <td className="p-3.5 font-mono font-bold text-primary">{booking.bookingNumber}</td>
-                  <td className="p-3.5">
-                    <div className="font-bold text-text-main">{booking.customerName}</div>
-                    <div className="text-[10px] text-text-muted">{booking.phone}</div>
-                  </td>
-                  <td className="p-3.5">
-                    <div className="font-semibold text-text-main">{booking.modelName}</div>
-                    <div className="text-[10px] text-text-muted">{booking.colorName}</div>
-                  </td>
-                  <td className="p-3.5 tabular-nums">
-                    <div className="font-bold text-status-green">{formatMoney(booking.tokenAmountPaise)}</div>
-                    <div className="text-[10px] text-text-muted">{booking.paymentMode}</div>
-                  </td>
-                  <td className="p-3.5">
-                    {booking.allocatedChassisNumber ? (
-                      <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-blue-50 text-status-blue border border-blue-200">
-                        {booking.allocatedChassisNumber}
-                      </span>
-                    ) : (
-                      <span className="text-[10px] font-semibold text-status-amber bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
-                        Unallocated
-                      </span>
-                    )}
-                  </td>
-                  <td className="p-3.5 text-text-muted">{formatDate(booking.tentativeDeliveryDate)}</td>
-                  <td className="p-3.5">
-                    <StatusBadge status={booking.status} />
-                  </td>
-                  <td className="p-3.5 text-right">
-                    <div className="flex items-center justify-end gap-1.5">
-                      <Button
-                        size="sm"
-                        variant="secondary"
-                        icon={FileText}
-                        onClick={() => {
-                          setActiveBooking(booking);
-                          setTokenReceiptOpen(true);
-                        }}
-                      >
-                        Receipt
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="primary"
-                        icon={Warehouse}
-                        onClick={() => handleOpenAllocation(booking)}
-                      >
-                        {booking.allocatedChassisNumber ? 'Re-allocate' : 'Allocate Chassis'}
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="danger"
-                        icon={XCircle}
-                        onClick={() => {
-                          setActiveBooking(booking);
-                          setCancelModalOpen(true);
-                        }}
-                      >
-                        Cancel
-                      </Button>
-                    </div>
+              {filteredBookings.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="p-8 text-center text-text-muted text-xs">
+                    No bookings found matching your search criteria.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                filteredBookings.map((booking) => (
+                  <tr key={booking.id} className="hover:bg-surface-subtle/70 transition-colors">
+                    <td className="px-4 py-3 font-mono font-bold text-primary whitespace-nowrap">
+                      {booking.bookingNumber}
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <div className="font-bold text-text-main">{booking.customerName}</div>
+                      <div className="text-[11px] font-mono text-text-muted whitespace-nowrap mt-0.5">
+                        {booking.phone}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <div className="font-semibold text-text-main">{booking.modelName}</div>
+                      <div className="text-[11px] text-text-muted mt-0.5">{booking.colorName}</div>
+                    </td>
+                    <td className="px-4 py-3 tabular-nums whitespace-nowrap">
+                      <div className="font-bold text-status-green">
+                        {formatMoney(booking.tokenAmountPaise)}
+                      </div>
+                      <div className="text-[10px] uppercase font-semibold text-text-muted mt-0.5">
+                        {booking.paymentMode}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      {booking.allocatedChassisNumber ? (
+                        <span className="font-mono text-xs font-semibold px-2.5 py-1 rounded-md bg-blue-50 text-status-blue border border-blue-200 inline-flex items-center gap-1.5">
+                          <Warehouse className="w-3.5 h-3.5 shrink-0" />
+                          <span>{booking.allocatedChassisNumber}</span>
+                        </span>
+                      ) : (
+                        <span className="text-[11px] font-semibold text-status-amber bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200 inline-flex items-center gap-1.5">
+                          <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                          <span>Awaiting VIN</span>
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3 text-text-muted whitespace-nowrap">
+                      {formatDate(booking.tentativeDeliveryDate)}
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <StatusBadge status={booking.status} />
+                    </td>
+                    <td className="px-4 py-3 text-right whitespace-nowrap pr-4">
+                      <div className="flex items-center justify-end gap-1.5">
+                        <Button
+                          size="xs"
+                          variant="secondary"
+                          icon={FileText}
+                          onClick={() => {
+                            setActiveBooking(booking);
+                            setTokenReceiptOpen(true);
+                          }}
+                          title="Print or share token advance receipt"
+                        >
+                          Receipt
+                        </Button>
+                        <Button
+                          size="xs"
+                          variant="primary"
+                          icon={Warehouse}
+                          onClick={() => handleOpenAllocation(booking)}
+                          title="Allocate single physical chassis VIN"
+                        >
+                          {booking.allocatedChassisNumber ? 'Re-allocate' : 'Allocate VIN'}
+                        </Button>
+                        <Button
+                          size="xs"
+                          variant="danger"
+                          icon={XCircle}
+                          onClick={() => {
+                            setActiveBooking(booking);
+                            setCancelModalOpen(true);
+                          }}
+                          title="Cancel booking reservation"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

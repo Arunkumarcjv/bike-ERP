@@ -28,45 +28,47 @@ export function Topbar() {
   const isEvenSecond = time.getSeconds() % 2 === 0;
 
   return (
-    <header className="h-14 bg-surface border-b border-border px-4 flex items-center justify-between sticky top-0 z-30 transition-colors">
+    <header className="h-14 bg-surface border-b border-border px-3 sm:px-4 flex items-center justify-between sticky top-0 z-30 transition-colors gap-2 sm:gap-4">
       {/* Left: Mobile hamburger & Branch & GSTIN */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         <button
           onClick={toggleSidebar}
-          className="p-1.5 rounded-button text-text-muted hover:text-text-main hover:bg-surface-subtle lg:hidden"
+          className="p-1.5 rounded-button text-text-muted hover:text-text-main hover:bg-surface-subtle lg:hidden shrink-0"
         >
           <Menu className="w-5 h-5" />
         </button>
 
         <BranchSwitcher />
 
-        {/* GSTIN Badge Chip */}
-        <div className="hidden md:flex items-center gap-1.5 px-2 py-1 rounded bg-surface-subtle border border-border text-[11px] font-mono text-text-muted">
+        {/* GSTIN Badge Chip - only displayed on wider screens to prevent squishing the search bar */}
+        <div className="hidden 2xl:flex items-center gap-1.5 px-2 py-1 rounded bg-surface-subtle border border-border text-[11px] font-mono text-text-muted shrink-0">
           <span className="font-sans font-medium text-text-subtle">GSTIN:</span>
           <span className="text-text-main font-semibold">{currentBranch?.gstin || '29AABCB1829M1ZK'}</span>
         </div>
       </div>
 
       {/* Middle: Command Palette Search Input (Ctrl+K) */}
-      <div className="hidden lg:flex items-center flex-1 max-w-md mx-6">
+      <div className="hidden md:flex items-center flex-1 max-w-md min-w-0 mx-2 lg:mx-4">
         <button
           onClick={() => setCommandPaletteOpen(true)}
-          className="w-full flex items-center justify-between px-3.5 py-1.5 rounded-input bg-surface-subtle border border-border text-xs text-text-muted hover:border-primary/40 hover:bg-surface-muted transition-colors"
+          className="w-full h-9 flex items-center justify-between px-3 py-1.5 rounded-input bg-surface-subtle border border-border text-xs text-text-muted hover:border-primary/40 hover:bg-surface-muted transition-colors overflow-hidden"
         >
-          <div className="flex items-center gap-2">
-            <Search className="w-4 h-4 text-text-muted" />
-            <span>Search anything (leads, VIN, jobs, invoices)...</span>
+          <div className="flex items-center gap-2 min-w-0 truncate">
+            <Search className="w-4 h-4 text-text-muted shrink-0" />
+            <span className="truncate whitespace-nowrap text-left">
+              Search leads, VIN, jobs, invoices...
+            </span>
           </div>
-          <kbd className="px-1.5 py-0.5 rounded border border-border bg-surface text-[10px] font-mono text-text-muted shadow-xs">
+          <kbd className="ml-2 px-1.5 py-0.5 rounded border border-border bg-surface text-[10px] font-mono text-text-muted shadow-xs shrink-0 whitespace-nowrap">
             Ctrl K
           </kbd>
         </button>
       </div>
 
       {/* Right Tools: Clock, Language, Theme, Notifications, Role Switcher */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
         {/* Live IST Clock */}
-        <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-subtle border border-border text-xs text-text-main font-medium tabular-nums">
+        <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-subtle border border-border text-xs text-text-main font-medium tabular-nums shrink-0 whitespace-nowrap">
           <Clock className="w-3.5 h-3.5 text-primary shrink-0" />
           <span>
             {format(time, 'hh')}
@@ -77,7 +79,7 @@ export function Topbar() {
         </div>
 
         {/* Language Switcher */}
-        <div className="flex items-center border border-border rounded-button overflow-hidden text-xs bg-surface-subtle">
+        <div className="flex items-center border border-border rounded-button overflow-hidden text-xs bg-surface-subtle shrink-0">
           <button
             onClick={() => i18n.changeLanguage('en')}
             className={`px-2 py-1 font-semibold transition-colors ${
@@ -107,7 +109,7 @@ export function Topbar() {
         {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
-          className="p-2 rounded-button text-text-muted hover:text-text-main hover:bg-surface-subtle transition-colors"
+          className="p-2 rounded-button text-text-muted hover:text-text-main hover:bg-surface-subtle transition-colors shrink-0"
           title={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} theme`}
         >
           {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4 text-amber-400" />}

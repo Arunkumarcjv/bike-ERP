@@ -9,7 +9,7 @@ export function WhatsAppLivePhonePreview({ conversations = [] }) {
   const activeConv = conversations[0] || null;
 
   return (
-    <Card className="flex flex-col">
+    <Card className="h-full flex flex-col">
       <CardHeader className="cursor-pointer" onClick={() => setCollapsed(!collapsed)}>
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
